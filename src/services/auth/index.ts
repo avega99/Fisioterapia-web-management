@@ -1,5 +1,5 @@
 import { axiosBase } from "../../config/api";
-import { ILoggedUser, ILogin, RefreshToken } from "../../global/auth.types";
+import { ILoggedUser, ILogin } from "../../global/auth.types";
 import { IResponse } from "../../global/common.types";
 
 export const loginService = async (data: ILogin): Promise<IResponse<ILoggedUser>> => {
@@ -20,7 +20,13 @@ export const refreshService = async (): Promise<IResponse<ILoggedUser>> => {
         withCredentials: true,
     });
 
-    console.log(response.data);
+    return response.data;
+};
+
+export const logoutService = async (): Promise<IResponse<undefined>> => {
+    const response = await axiosBase.get("/auth/logout?type=web", {
+        withCredentials: true,
+    });
 
     return response.data;
 };

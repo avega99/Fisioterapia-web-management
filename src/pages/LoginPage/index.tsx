@@ -12,6 +12,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const LoginPgae = () => {
     const setUser = useAuthStore((state) => state.setUser);
+    const persists = useAuthStore((state) => state.persists);
+    const togglePersist = useAuthStore((state) => state.togglePersist);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -55,6 +57,13 @@ const LoginPgae = () => {
                                         {...form.register("password", { required: false })}
                                     />
                                     {form.formState.errors.password && <ErrorText className="text-left mt-1">La contraseña es requerida</ErrorText>}
+                                </div>
+
+                                <div className="mt-2">
+                                    <input type="checkbox" id="persist" onChange={togglePersist} checked={persists} />
+                                    <label className="ml-2" htmlFor="persist">
+                                        Confiar en este dispositivo
+                                    </label>
                                 </div>
                             </div>
 

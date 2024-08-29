@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import useRefreshToken from "../hooks/useRefreshToken";
 import { useAuthStore } from "../store/authStore";
@@ -6,7 +6,10 @@ import { useAuthStore } from "../store/authStore";
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const user = useAuthStore((state) => state.user);
+    const persist = useAuthStore((state) => state.persists);
     const refresh = useRefreshToken();
+
+    console.log({ persist });
 
     useEffect(() => {
         const verifyRefreshToken = async () => {
@@ -21,12 +24,12 @@ const PersistLogin = () => {
         !user?.accessToken ? verifyRefreshToken() : setIsLoading(false);
     }, []);
 
-    useEffect(() => {
-        console.log(`isLoading ${isLoading}`);
-        console.log(`aT ${JSON.stringify(user?.accessToken)}`);
-    }, [isLoading]);
+    // useEffect(() => {
+    //     console.log(`isLoading ${isLoading}`);
+    //     console.log(`aT ${JSON.stringify(user?.accessToken)}`);
+    // }, [isLoading]);
 
-    return <>{isLoading ? <p>Loading</p> : <Outlet />}</>;
+    return <>{!persist ? <Outlet /> : isLoading ? <p>Loading</p> : <Outlet />}</>;
 };
 
 export default PersistLogin;

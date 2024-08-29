@@ -6,14 +6,12 @@ import SunIcon from "@heroicons/react/24/outline/SunIcon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import { themeChange } from "theme-change";
 import { useHeaderStore } from "../../../store/headerStore";
-import { useAuthStore } from "../../../store/authStore";
+import useLogout from "../../../hooks/useLogout";
 
 const Header = () => {
     const [currentTheme, setCurrentTheme] = useState(localStorage.getItem("theme"));
     const title = useHeaderStore((state) => state.title);
-    const setUser = useAuthStore((state) => state.setUser);
-
-    const logout = () => setUser(null);
+    const logout = useLogout();
 
     useEffect(() => {
         themeChange(false);
