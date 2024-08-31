@@ -12,11 +12,12 @@ import RequireAuth from "./common/RequiredAuth.tsx";
 import UnauthorizedPage from "./pages/UnauthorizedPage/index.tsx";
 import { USER_ROLE } from "./global/user.types.ts";
 import PersistLogin from "./common/PersistLogin.tsx";
+import AddNewCheckupPage from "./pages/AddNewCheckupPage/index.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
         mutations: { retry: false },
-        queries: { retry: false },
+        queries: { retry: false, refetchOnWindowFocus: false, staleTime: 120000 },
     },
 });
 
@@ -30,6 +31,7 @@ createRoot(document.getElementById("root")!).render(
                             <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.READ, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITE]} />}>
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="jugadores" element={<PlayersPage />} />
+                                <Route path="agregar-consulta" element={<AddNewCheckupPage />} />
                             </Route>
                             <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN]} />}>
                                 <Route path="usuarios" element={<UsersPage />} />

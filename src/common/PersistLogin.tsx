@@ -9,8 +9,6 @@ const PersistLogin = () => {
     const persist = useAuthStore((state) => state.persists);
     const refresh = useRefreshToken();
 
-    console.log({ persist });
-
     useEffect(() => {
         const verifyRefreshToken = async () => {
             try {

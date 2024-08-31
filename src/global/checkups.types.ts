@@ -13,3 +13,12 @@ export interface ICheckup {
     player: IPlayer;
     createdBy: IUser;
 }
+
+
+export interface ICheckupForm {
+    assets: File[];
+    tests: string;
+    notes: string;
+    results: string;
+    playerId: string;
+}

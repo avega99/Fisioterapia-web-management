@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { axiosPrivate } from "../config/api";
 import useRefreshToken from "./useRefreshToken";
 import { useAuthStore } from "../store/authStore";
+import { IRequest } from "../global/common.types";
 
-const useAxiosPrivate = () => {
+const useAxiosPrivate = <T,O>(service: (params: IRequest<T>) => Promise<O>) => {
     const user = useAuthStore((state) => state.user);
     const refresh = useRefreshToken();
 
@@ -39,7 +40,13 @@ const useAxiosPrivate = () => {
         };
     }, [user, refresh]);
 
-    return axiosPrivate;
+    const makeRequest = async (data: T): Promise<Awaited<O>> => {
+        // const newData = data[0];
+        const response = await service({ axios: axiosPrivate, params: data });
+        return response;
+    };
+
+    return makeRequest;
 };
 
 export default useAxiosPrivate;

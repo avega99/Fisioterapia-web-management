@@ -61,18 +61,18 @@ also includes corporate and retro themes in tailwind.config file */}
                 </label>
 
                 {/* Notification icon */}
-                <button className="btn btn-ghost ml-4  btn-circle" onClick={() => {}}>
+                {/* <button className="btn btn-ghost ml-4  btn-circle" onClick={() => {}}>
                     <div className="indicator">
                         <BellIcon className="h-6 w-6" />
                         {3 > 0 ? <span className="indicator-item badge badge-secondary badge-sm">{3}</span> : null}
                     </div>
-                </button>
+                </button> */}
 
                 {/* Profile icon, opening menu on click */}
                 <div className="dropdown dropdown-end ml-4">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img src="https://placeimg.com/80/80/people" alt="profile" />
+                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile" />
                         </div>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
@@ -83,7 +83,7 @@ also includes corporate and retro themes in tailwind.config file */}
                             </Link>
                         </li>
                         <li className="">
-                            <Link to={"/app/settings-billing"}>Bill History</Link>
+                            <Link to={"/app/settings-billing"}>Usuarios</Link>
                         </li>
                         <div className="divider mt-0 mb-0"></div>
                         <li>

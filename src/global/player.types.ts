@@ -13,6 +13,7 @@ export enum PLAYER_CATEGORY {
 export interface IPlayer {
     id: number;
     player_name: string;
+    last_name: string;
     squad_number: number;
     status: PLAYER_STATUS;
     category: PLAYER_CATEGORY;
