@@ -16,7 +16,7 @@ export const createCheckupsService = async ({ axios, params }: IRequest<ICheckup
     }
 
     formData.append("notes", params.notes);
-    formData.append("playerId", params.playerId);
+    formData.append("playerId", params.player.id.toString());
     formData.append("tests", params.tests);
     formData.append("results", params.results);
 

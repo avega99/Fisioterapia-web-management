@@ -3,10 +3,11 @@ import TopSideButtons from "./components/TopSideButtons";
 import { useHeaderStore } from "../../store/headerStore";
 import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useQuery } from "react-query";
+
 import { getCheckupsService } from "../../services/checkups";
 import ErrorText from "../../common/ErrorText";
 import CheckupRow from "./components/CheckupRow";
+import { useQuery } from "@tanstack/react-query";
 
 const HomePage = () => {
     const setTitle = useHeaderStore((state) => state.setTitle);

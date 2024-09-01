@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { axiosPrivate } from "../config/api";
 import useRefreshToken from "./useRefreshToken";
 import { useAuthStore } from "../store/authStore";
 import { IRequest } from "../global/common.types";
 
-const useAxiosPrivate = <T,O>(service: (params: IRequest<T>) => Promise<O>) => {
+const useAxiosPrivate = <T, O>(service: (params: IRequest<T>) => Promise<O>) => {
     const user = useAuthStore((state) => state.user);
     const refresh = useRefreshToken();
 
@@ -40,11 +40,14 @@ const useAxiosPrivate = <T,O>(service: (params: IRequest<T>) => Promise<O>) => {
         };
     }, [user, refresh]);
 
-    const makeRequest = async (data: T): Promise<Awaited<O>> => {
-        // const newData = data[0];
-        const response = await service({ axios: axiosPrivate, params: data });
-        return response;
-    };
+    const makeRequest = useCallback(
+        async (data: T): Promise<Awaited<O>> => {
+            // const newData = data[0];
+            const response = await service({ axios: axiosPrivate, params: data });
+            return response;
+        },
+        [service]
+    );
 
     return makeRequest;
 };

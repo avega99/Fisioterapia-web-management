@@ -7,13 +7,13 @@ import Layout from "./container/layout/index.tsx";
 import HomePage from "./pages/HomePage/index.tsx";
 import PlayersPage from "./pages/PlayersPage/index.tsx";
 import UsersPage from "./pages/UsersPage/index.tsx";
-import { QueryClient, QueryClientProvider } from "react-query";
 import RequireAuth from "./common/RequiredAuth.tsx";
 import UnauthorizedPage from "./pages/UnauthorizedPage/index.tsx";
 import { USER_ROLE } from "./global/user.types.ts";
 import PersistLogin from "./common/PersistLogin.tsx";
 import AddNewCheckupPage from "./pages/AddNewCheckupPage/index.tsx";
 import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient({
     defaultOptions: {

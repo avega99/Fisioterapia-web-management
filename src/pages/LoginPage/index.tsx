@@ -2,13 +2,13 @@ import Input from "../../common/Input";
 import LoginIntro from "./components/LoginIntro";
 import { useForm } from "react-hook-form";
 import { ILogin } from "../../global/auth.types";
-import { useMutation } from "react-query";
 import { loginService } from "../../services/auth";
 import ErrorText from "../../common/ErrorText";
 import axios from "axios";
 import { IResponse } from "../../global/common.types";
 import { useAuthStore } from "../../store/authStore";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 const LoginPgae = () => {
     const setUser = useAuthStore((state) => state.setUser);
@@ -86,7 +86,7 @@ const LoginPgae = () => {
                             ) : (
                                 loginMutuation.isError && <ErrorText>No server response</ErrorText>
                             )}
-                            <button type="submit" className={"btn mt-2 w-full btn-primary" + (loginMutuation.isLoading ? " loading" : "")}>
+                            <button type="submit" className={"btn mt-2 w-full btn-primary" + (loginMutuation.isPending ? " loading" : "")}>
                                 Login
                             </button>
 

@@ -19,5 +19,5 @@ export interface ICheckupForm {
     tests: string;
     notes: string;
     results: string;
-    playerId: string;
+    player: IPlayer
 }
