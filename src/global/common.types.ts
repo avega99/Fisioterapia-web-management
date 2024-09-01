@@ -12,3 +12,8 @@ export interface IRequest<D> {
     axios: AxiosInstance;
     params: D;
 }
+
+export interface INotificationPayload {
+    message: string;
+    status: number;
+}

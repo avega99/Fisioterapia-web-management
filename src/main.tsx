@@ -13,6 +13,7 @@ import UnauthorizedPage from "./pages/UnauthorizedPage/index.tsx";
 import { USER_ROLE } from "./global/user.types.ts";
 import PersistLogin from "./common/PersistLogin.tsx";
 import AddNewCheckupPage from "./pages/AddNewCheckupPage/index.tsx";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -42,6 +43,7 @@ createRoot(document.getElementById("root")!).render(
                     <Route path="/unauthorized" element={<UnauthorizedPage />} />
                 </Routes>
             </BrowserRouter>
+            <Toaster />
         </QueryClientProvider>
     </StrictMode>
 );

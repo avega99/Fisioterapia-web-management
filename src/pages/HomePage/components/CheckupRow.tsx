@@ -12,9 +12,12 @@ interface Props {
 
 const CheckupRow = ({ checkup }: Props) => {
     const status = useMemo(() => {
-        if (checkup.player.status == PLAYER_STATUS.AVAILABLE) return <div className="badge badge-accent">Jugando</div>;
-        if (checkup.player.status == PLAYER_STATUS.TRAINING) return <div className="badge badge-primary">Entrenando</div>;
-        if (checkup.player.status == PLAYER_STATUS.INJURED) return <div className="badge badge-secondary">Lesionado</div>;
+        if (checkup.player.status == PLAYER_STATUS.AVAILABLE)
+            return <div className="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">Jugando</div>;
+        if (checkup.player.status == PLAYER_STATUS.TRAINING)
+            return <div className="nline-flex rounded-full bg-warning bg-opacity-10 px-3 py-1 text-sm font-medium text-warning">Entrenando</div>;
+        if (checkup.player.status == PLAYER_STATUS.INJURED)
+            return <div className="inline-flex rounded-full bg-error bg-opacity-10 px-3 py-1 text-sm font-medium text-error">Lesionado</div>;
     }, [checkup.player]);
 
     const formattedDate = useMemo(() => dayjs(checkup.createdAt).format("DD MMM YY"), [checkup.createdAt]);

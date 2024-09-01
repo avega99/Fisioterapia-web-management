@@ -4,22 +4,42 @@ import Textarea from "../../common/Textarea";
 import TitleCard from "../../common/TitleCard";
 import ErrorText from "../../common/ErrorText";
 import { ICheckupForm } from "../../global/checkups.types";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { createCheckupsService } from "../../services/checkups";
+import { useMutation, useQueryClient } from "react-query";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
+import { IResponse } from "../../global/common.types";
 
 const AddNewCheckupPage = () => {
+    const queryClient = useQueryClient();
+    const createCheckup = useAxiosPrivate(createCheckupsService);
+    const createCheckupMutuation = useMutation({
+        mutationFn: createCheckup,
+        onSuccess: () => {
+            toast.success("Consulata agregada correctamente!");
+            reset();
+            queryClient.invalidateQueries(["checkups"]);
+        },
+        onError: (error: AxiosError<IResponse<void>>) => {
+            toast.success(error?.response?.data?.message || "Hubo un error al agregar la consulta");
+        },
+    });
+
     const {
         formState: { errors },
         handleSubmit,
         register,
+        reset,
     } = useForm<ICheckupForm>();
 
-    const onSubmit = (data: ICheckupForm) => {
-        console.log({ data });
-    };
+    const onSubmit = (data: ICheckupForm) => createCheckupMutuation.mutate(data);
+
     return (
         <div>
             <TitleCard title="Agregar consulta">
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1  gap-6">
                         <div>
                             <Input {...register("playerId", { required: true })} label="Jugador" />
                             {errors.notes && <ErrorText>El jugador es requerido</ErrorText>}
@@ -54,8 +74,8 @@ const AddNewCheckupPage = () => {
                         </div>
                     </div>
                     <div className="mt-16">
-                        <button type="submit" className="btn btn-primary float-right">
-                            Enviar
+                        <button type="submit" className="btn btn-primary float-right" disabled={createCheckupMutuation.isLoading}>
+                            {createCheckupMutuation.isLoading ? "Enviando" : "Enviar"}
                         </button>
                     </div>
                 </form>

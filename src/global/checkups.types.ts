@@ -14,9 +14,8 @@ export interface ICheckup {
     createdBy: IUser;
 }
 
-
 export interface ICheckupForm {
-    assets: File[];
+    assets: FileList;
     tests: string;
     notes: string;
     results: string;
