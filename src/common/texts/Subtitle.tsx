@@ -5,7 +5,7 @@ interface Props extends PropsWithChildren {
 }
 
 const Subtitle = ({ className, children }: Props) => {
-    return <div className={`text-xl font-semibold ${className}`}>{children}</div>;
+    return <div className={`text-xl font-semibold items-center flex justify-between ${className}`}>{children}</div>;
 };
 
 export default Subtitle;

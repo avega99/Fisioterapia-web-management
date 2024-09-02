@@ -1,13 +1,13 @@
-import TitleCard from "../../common/TitleCard";
+import { useEffect } from "react";
 import TopSideButtons from "./components/TopSideButtons";
 import { useHeaderStore } from "../../store/headerStore";
-import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 import { getCheckupsService } from "../../services/checkups";
-import ErrorText from "../../common/ErrorText";
 import CheckupRow from "./components/CheckupRow";
 import { useQuery } from "@tanstack/react-query";
+import ErrorText from "@/common/texts/ErrorText";
+import TitleCard from "@/common/cards/TitleCard";
 
 const HomePage = () => {
     const setTitle = useHeaderStore((state) => state.setTitle);
@@ -27,7 +27,7 @@ const HomePage = () => {
             {checkuQuery.isError && <ErrorText>errrrooooor</ErrorText>}
             <TitleCard title="Consultas" TopSideButtons={<TopSideButtons />}>
                 <div className="overflow-x-auto w-full">
-                    <table className="table w-full">
+                    <table className="table w-full ">
                         <thead>
                             <tr>
                                 <th>Nombre Jugador</th>

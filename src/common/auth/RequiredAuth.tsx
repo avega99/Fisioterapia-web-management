@@ -1,6 +1,6 @@
-import { USER_ROLE } from "../global/user.types";
-import { useAuthStore } from "../store/authStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { USER_ROLE } from "../../global/user.types";
+import { useAuthStore } from "../../store/authStore";
 
 interface Props {
     allowedRoles: USER_ROLE[];

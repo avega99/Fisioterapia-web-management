@@ -1,8 +1,4 @@
 import { Controller, useForm } from "react-hook-form";
-import Input from "../../common/Input";
-import Textarea from "../../common/Textarea";
-import TitleCard from "../../common/TitleCard";
-import ErrorText from "../../common/ErrorText";
 import { ICheckupForm } from "../../global/checkups.types";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { createCheckupsService } from "../../services/checkups";
@@ -11,8 +7,14 @@ import { AxiosError } from "axios";
 import { IResponse } from "../../global/common.types";
 import Autocomplete from "./components/Autocomplete";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useHeaderStore } from "../../store/headerStore";
+import { useEffect } from "react";
+import Textarea from "@/common/inputs/Textarea";
+import TitleCard from "@/common/cards/TitleCard";
+import ErrorText from "@/common/texts/ErrorText";
 
 const AddNewCheckupPage = () => {
+    const setTitle = useHeaderStore((state) => state.setTitle);
     const queryClient = useQueryClient();
     const createCheckup = useAxiosPrivate(createCheckupsService);
 
@@ -39,9 +41,13 @@ const AddNewCheckupPage = () => {
 
     const onSubmit = (data: ICheckupForm) => createCheckupMutuation.mutate(data);
 
+    useEffect(() => {
+        setTitle("Agregar consulta");
+    }, []);
+
     return (
         <div>
-            <TitleCard title="Agregar consulta">
+            <TitleCard title="Agregar consulta" showBack>
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1  gap-6">
                         <div>

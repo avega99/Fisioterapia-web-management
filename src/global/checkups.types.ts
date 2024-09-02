@@ -1,3 +1,4 @@
+import { CheckupMedia } from "./checkupMedia.interfaces";
 import { IPlayer } from "./player.types";
 import { IUser } from "./user.types";
 
@@ -14,10 +15,14 @@ export interface ICheckup {
     createdBy: IUser;
 }
 
+export interface ICheckupDetails extends ICheckup {
+    media: CheckupMedia[];
+}
+
 export interface ICheckupForm {
     assets: FileList;
     tests: string;
     notes: string;
     results: string;
-    player: IPlayer
+    player: IPlayer;
 }

@@ -5,21 +5,14 @@ import { PLAYER_STATUS } from "../../../global/player.types";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import PencilSquareIcon from "@heroicons/react/24/outline/PencilSquareIcon";
 import DocumentMagnifyingGlassIcon from "@heroicons/react/24/outline/DocumentMagnifyingGlassIcon";
+import { Link } from "react-router-dom";
+import PlayerStatusBadge from "../../../common/badges/PlayerStatusBadge";
 
 interface Props {
     checkup: ICheckup;
 }
 
 const CheckupRow = ({ checkup }: Props) => {
-    const status = useMemo(() => {
-        if (checkup.player.status == PLAYER_STATUS.AVAILABLE)
-            return <div className="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">Jugando</div>;
-        if (checkup.player.status == PLAYER_STATUS.TRAINING)
-            return <div className="nline-flex rounded-full bg-warning bg-opacity-10 px-3 py-1 text-sm font-medium text-warning">Entrenando</div>;
-        if (checkup.player.status == PLAYER_STATUS.INJURED)
-            return <div className="inline-flex rounded-full bg-error bg-opacity-10 px-3 py-1 text-sm font-medium text-error">Lesionado</div>;
-    }, [checkup.player]);
-
     const formattedDate = useMemo(() => dayjs(checkup.createdAt).format("DD MMM YY"), [checkup.createdAt]);
 
     return (
@@ -46,7 +39,9 @@ const CheckupRow = ({ checkup }: Props) => {
             </td>
             <td className="">{checkup.player.squad_number}</td>
             <td className="">{formattedDate}</td>
-            <td className="">{status}</td>
+            <td className="">
+                <PlayerStatusBadge status={checkup.player.status} />
+            </td>
             <td className="">{checkup.createdBy.name}</td>
             <td className="">
                 <p className="overflow-hidden whitespace-nowrap text-ellipsis max-w-52">{checkup.notes}</p>
@@ -58,30 +53,23 @@ const CheckupRow = ({ checkup }: Props) => {
                 <p className="overflow-hidden whitespace-nowrap text-ellipsis  max-w-52">{checkup.results}</p>
             </td>
             <td className="text-center min-w-44">
-                <button
-                    className="btn btn-square btn-ghost"
-                    onClick={(e) => {
-                        alert("Ver detalles");
-                    }}
-                >
-                    <DocumentMagnifyingGlassIcon className="w-5" />
-                </button>
-                <button
-                    className="btn btn-square btn-ghost"
-                    onClick={(e) => {
-                        alert("editar");
-                    }}
-                >
-                    <PencilSquareIcon className="w-5" />
-                </button>
-                <button
-                    className="btn btn-square btn-ghost"
-                    onClick={(e) => {
-                        alert("remove");
-                    }}
-                >
-                    <TrashIcon className="w-5" />
-                </button>
+                <div className="tooltip" data-tip="Ver detalles de consulta">
+                    <Link to={`/consulta/${checkup.id}`}>
+                        <button className="btn btn-square btn-ghost">
+                            <DocumentMagnifyingGlassIcon className="w-5" />
+                        </button>
+                    </Link>
+                </div>
+                <div className="tooltip" data-tip="Editar consulta">
+                    <button className="btn btn-square btn-ghost">
+                        <PencilSquareIcon className="w-5" />
+                    </button>
+                </div>
+                <div className="tooltip" data-tip="Eliminar consulta">
+                    <button className="btn btn-square btn-ghost">
+                        <TrashIcon className="w-5" />
+                    </button>
+                </div>
             </td>
         </tr>
     );

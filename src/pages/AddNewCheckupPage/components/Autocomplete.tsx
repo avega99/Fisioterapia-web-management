@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import Input from "../../../common/Input";
+import Input from "../../../common/inputs/Input";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { searchPlayersService } from "../../../services/player";
 import { skipToken, useQuery } from "@tanstack/react-query";
@@ -28,10 +28,16 @@ const Autocomplete = ({ onSelectPlayer, value }: Props) => {
         queryFn: deferredValue ? () => searchPlayers({ name: deferredValue }) : skipToken,
     });
 
-    useEffect(() => {
+    const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.value;
+        setSearch(newValue);
+        if (newValue == "") {
+            onSelectPlayer(null);
+            setShowResults(false);
+            return;
+        }
         setShowResults(true);
-        onSelectPlayer(null);
-    }, [deferredValue]);
+    };
 
     useEffect(() => {
         if (value == null) {
@@ -41,12 +47,7 @@ const Autocomplete = ({ onSelectPlayer, value }: Props) => {
 
     return (
         <div className="relative">
-            <Input
-                type="search"
-                label="Jugador"
-                value={value ? `${value.player_name} ${value.last_name}` : search}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-            />
+            <Input type="search" label="Jugador" value={value ? `${value.player_name} ${value.last_name}` : search} onChange={onChangeValue} />
             {playersQuery.isSuccess && playersQuery.data.data.length > 0 && showResults && (
                 <div className="card bg-base-200 gap-y-4 p-5 rounded-t-none">
                     {/* {playersQuery.isLoading && <span className="loading loading-dots loading-lg"></span>} */}

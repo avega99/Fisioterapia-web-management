@@ -1,14 +1,14 @@
-import Input from "../../common/Input";
 import LoginIntro from "./components/LoginIntro";
 import { useForm } from "react-hook-form";
 import { ILogin } from "../../global/auth.types";
 import { loginService } from "../../services/auth";
-import ErrorText from "../../common/ErrorText";
 import axios from "axios";
 import { IResponse } from "../../global/common.types";
 import { useAuthStore } from "../../store/authStore";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import Input from "@/common/inputs/Input";
+import ErrorText from "@/common/texts/ErrorText";
 
 const LoginPgae = () => {
     const setUser = useAuthStore((state) => state.setUser);

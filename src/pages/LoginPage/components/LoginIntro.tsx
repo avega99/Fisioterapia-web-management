@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../../../assets/icons/logo192.png'
-import Input from '../../../common/Input'
+import Input from '../../../common/inputs/Input'
 import intro from '../../../assets/icons/intro.png'
 
 const LoginIntro = () => {

@@ -5,9 +5,8 @@ export enum PLAYER_STATUS {
 }
 
 export enum PLAYER_CATEGORY {
-    AVAILABLE = "AVAILABLE",
-    TRAINING = "TRAINING",
-    INJURED = "INJURED",
+    SUB_19 = "SUB_19",
+    SUB_23 = "SUB_23",
 }
 
 export interface IPlayer {

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
-import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import { themeChange } from "theme-change";
 import { useHeaderStore } from "../../../store/headerStore";
 import useLogout from "../../../hooks/useLogout";

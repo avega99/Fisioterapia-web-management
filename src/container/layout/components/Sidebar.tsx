@@ -6,6 +6,7 @@ import UserGroup from "@heroicons/react/24/outline/UserGroupIcon";
 import Shield from "@heroicons/react/24/outline/ShieldCheckIcon";
 import { useAuthStore } from "../../../store/authStore";
 import { USER_ROLE } from "../../../global/user.types";
+import { useMemo } from "react";
 
 const Sidebar = () => {
     const location = useLocation();
@@ -14,6 +15,8 @@ const Sidebar = () => {
     const close = () => {
         document?.getElementById("left-sidebar-drawer")?.click();
     };
+
+    const isAdmin = useMemo(() => user?.role == USER_ROLE.ADMIN || user?.role == USER_ROLE.SUPER_ADMIN, []);
 
     return (
         <div className="drawer-side  z-30">
@@ -45,17 +48,16 @@ const Sidebar = () => {
                         ) : null}
                     </NavLink>
                 </li>
-                {user?.role === USER_ROLE.ADMIN ||
-                    (user?.role === USER_ROLE.SUPER_ADMIN && (
-                        <li className="">
-                            <NavLink end to={"/usuarios"} className={({ isActive }) => `${isActive ? "font-semibold  bg-base-200 " : "font-normal"}`}>
-                                <Shield className="h-6 w-6" /> usuarios
-                                {location.pathname === "/usuarios" ? (
-                                    <span className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary " aria-hidden="true"></span>
-                                ) : null}
-                            </NavLink>
-                        </li>
-                    ))}
+                {isAdmin && (
+                    <li className="">
+                        <NavLink end to={"/usuarios"} className={({ isActive }) => `${isActive ? "font-semibold  bg-base-200 " : "font-normal"}`}>
+                            <Shield className="h-6 w-6" /> usuarios
+                            {location.pathname === "/usuarios" ? (
+                                <span className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary " aria-hidden="true"></span>
+                            ) : null}
+                        </NavLink>
+                    </li>
+                )}
             </ul>
         </div>
     );

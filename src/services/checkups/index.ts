@@ -1,5 +1,5 @@
 import { IRequest, IResponse } from "../../global/common.types";
-import { ICheckup, ICheckupForm } from "../../global/checkups.types";
+import { ICheckup, ICheckupDetails, ICheckupForm } from "../../global/checkups.types";
 
 export const getCheckupsService = async ({ axios }: IRequest<void>): Promise<IResponse<ICheckup[]>> => {
     const response = await axios.get("/checkup");
@@ -25,5 +25,10 @@ export const createCheckupsService = async ({ axios, params }: IRequest<ICheckup
             "Content-Type": "multipart/form-data",
         },
     });
+    return response.data;
+};
+
+export const getCheckupDetailsService = async ({ axios, params }: IRequest<{ id: number | string }>): Promise<IResponse<ICheckupDetails>> => {
+    const response = await axios.get(`/checkup/${params.id}`);
     return response.data;
 };

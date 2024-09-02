@@ -7,13 +7,14 @@ import Layout from "./container/layout/index.tsx";
 import HomePage from "./pages/HomePage/index.tsx";
 import PlayersPage from "./pages/PlayersPage/index.tsx";
 import UsersPage from "./pages/UsersPage/index.tsx";
-import RequireAuth from "./common/RequiredAuth.tsx";
 import UnauthorizedPage from "./pages/UnauthorizedPage/index.tsx";
 import { USER_ROLE } from "./global/user.types.ts";
-import PersistLogin from "./common/PersistLogin.tsx";
 import AddNewCheckupPage from "./pages/AddNewCheckupPage/index.tsx";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CheckupDetailsPage from "./pages/CheckupDetailsPage/index.tsx";
+import PersistLogin from "./common/auth/PersistLogin.tsx";
+import RequireAuth from "./common/auth/RequiredAuth.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -32,6 +33,9 @@ createRoot(document.getElementById("root")!).render(
                             <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.READ, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITE]} />}>
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="jugadores" element={<PlayersPage />} />
+                                <Route path="/consulta/:id" element={<CheckupDetailsPage />} />
+                            </Route>
+                            <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITE]} />}>
                                 <Route path="agregar-consulta" element={<AddNewCheckupPage />} />
                             </Route>
                             <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN]} />}>
