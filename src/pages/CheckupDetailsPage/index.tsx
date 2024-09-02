@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
 import PlayerStatusBadge from "@/common/badges/PlayerStatusBadge";
 import { PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
-import ArrowLeftCircleIcon from "@heroicons/react/24/outline/ArrowLeftCircleIcon";
 import BackButton from "@/common/buttons/BackButton";
 
 const playerCategory = {

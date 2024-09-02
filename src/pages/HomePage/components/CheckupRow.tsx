@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { ICheckup } from "../../../global/checkups.types";
 import dayjs from "dayjs";
-import { PLAYER_STATUS } from "../../../global/player.types";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import PencilSquareIcon from "@heroicons/react/24/outline/PencilSquareIcon";
 import DocumentMagnifyingGlassIcon from "@heroicons/react/24/outline/DocumentMagnifyingGlassIcon";
