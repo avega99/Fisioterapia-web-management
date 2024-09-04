@@ -1,3 +1,4 @@
+import DeleteConfirmationModal from "@/pages/HomePage/components/DeleteConfirmationModal";
 import AddNewCheckup from "../../../pages/HomePage/components/AddNewCheckup";
 import { BodyType, useModalStore } from "../../../store/modalStore";
 
@@ -13,7 +14,8 @@ const ModalLayout = () => {
                     <h3 className="font-semibold text-2xl pb-6 text-center">{title}</h3>
                     {
                         {
-                            [BodyType.ADD_NEW_PLAYER]: <AddNewCheckup closeModal={close} />,
+                            [BodyType.ADD_NEW_PLAYER]: <AddNewCheckup closeModal={closeModal} />,
+                            [BodyType.DELETE_CHECKUP]: <DeleteConfirmationModal closeModal={closeModal} />,
                             [BodyType.DEFAULT]: <div></div>,
                         }[bodyType]
                     }

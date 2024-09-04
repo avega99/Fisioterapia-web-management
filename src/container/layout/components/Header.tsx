@@ -6,6 +6,7 @@ import SunIcon from "@heroicons/react/24/outline/SunIcon";
 import { themeChange } from "theme-change";
 import { useHeaderStore } from "../../../store/headerStore";
 import useLogout from "../../../hooks/useLogout";
+import doctor from "@/assets/icons/doctor.png";
 
 const Header = () => {
     const [currentTheme, setCurrentTheme] = useState(localStorage.getItem("theme"));
@@ -71,14 +72,14 @@ also includes corporate and retro themes in tailwind.config file */}
                 <div className="dropdown dropdown-end ml-4">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile" />
+                            <img src={doctor} alt="profile" />
                         </div>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li className="justify-between">
                             <Link to={"/app/settings-profile"}>
-                                Profile Settings
-                                <span className="badge">New</span>
+                                Perfil
+                                {/* <span className="badge">New</span> */}
                             </Link>
                         </li>
                         <li className="">
@@ -86,7 +87,7 @@ also includes corporate and retro themes in tailwind.config file */}
                         </li>
                         <div className="divider mt-0 mb-0"></div>
                         <li>
-                            <a onClick={logout}>Logout</a>
+                            <a onClick={logout}>Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

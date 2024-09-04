@@ -1,6 +1,6 @@
 export type CheckupMediaType = "IMAGE" | "VIDEO";
 
-export interface CheckupMedia {
+export interface ICheckupMedia {
     id: number;
     url: string;
     asset_name: string;

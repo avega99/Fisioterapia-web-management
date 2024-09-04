@@ -17,3 +17,12 @@ export interface INotificationPayload {
     message: string;
     status: number;
 }
+
+export interface IPaginatedResponse<T> extends IResponse<T> {
+    pagination: {
+        totalPages: 1;
+        currentPage: 1;
+        nextPage: number | null;
+        perPage: 10;
+    };
+}

@@ -8,6 +8,7 @@ import LoadingIndicator from "@/common/loading/LoadingIndicator";
 import PlayerStatusBadge from "@/common/badges/PlayerStatusBadge";
 import { PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
 import BackButton from "@/common/buttons/BackButton";
+import { PhotoView } from "react-photo-view";
 
 const playerCategory = {
     [PLAYER_CATEGORY.SUB_19]: "Sub 19",
@@ -40,6 +41,9 @@ const CheckupDetailsPage = () => {
     if (checkupQuery.isError) {
         return <div>Error!</div>;
     }
+
+    const images = checkupQuery.data.data.media.filter((asset) => asset.type == "IMAGE");
+    const videos = checkupQuery.data.data.media.filter((asset) => asset.type == "VIDEO");
 
     return (
         checkupQuery.isSuccess && (
@@ -127,16 +131,27 @@ const CheckupDetailsPage = () => {
                         <div>
                             <h2 id="getstarted3">Imagenes</h2>
 
-                            <div className="carousel rounded-box not-prose">
-                                {checkupQuery.data.data.media.map((asset) => (
-                                    <div key={asset.id} className="carousel-item max-h-96 max-w-full sm:max-w-44 ">
-                                        <img src={asset.url} alt="Burger" />
-                                    </div>
+                            <div className="carousel rounded-box gap-2 not-prose">
+                                {images.map((asset) => (
+                                    <PhotoView src={asset.url} key={asset.id}>
+                                        <div key={asset.id} className="carousel-item max-h-96 max-w-full md:w-96 ">
+                                            <img src={asset.url} alt="image" />
+                                        </div>
+                                    </PhotoView>
                                 ))}
                             </div>
                         </div>
                         <div>
                             <h2>Videos</h2>
+                            <div className="carousel rounded-box gap-2 not-prose">
+                                {videos.map((asset) => (
+                                    <div key={asset.id} className="carousel-item max-h-96 max-w-full md:w-96">
+                                        <video src={asset.url} controls>
+                                            Tu navegador la reproducción de videos
+                                        </video>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </article>

@@ -5,7 +5,7 @@ import { createCheckupsService } from "../../services/checkups";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { IResponse } from "../../global/common.types";
-import Autocomplete from "./components/Autocomplete";
+import Autocomplete from "../../common/inputs/AutocompletePlayer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useHeaderStore } from "../../store/headerStore";
 import { useEffect } from "react";

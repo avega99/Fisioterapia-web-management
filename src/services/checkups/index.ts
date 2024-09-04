@@ -1,9 +1,8 @@
-import { IRequest, IResponse } from "../../global/common.types";
-import { ICheckup, ICheckupDetails, ICheckupForm } from "../../global/checkups.types";
+import { IPaginatedResponse, IRequest, IResponse } from "../../global/common.types";
+import { ICheckup, ICheckupDetails, ICheckupForm, IEditCheckupForm } from "../../global/checkups.types";
 
-export const getCheckupsService = async ({ axios }: IRequest<void>): Promise<IResponse<ICheckup[]>> => {
-    const response = await axios.get("/checkup");
-    console.log(response.data);
+export const getCheckupsService = async ({ axios, params: { page } }: IRequest<{ page: number }>): Promise<IPaginatedResponse<ICheckup[]>> => {
+    const response = await axios.get(`/checkup?page=${page}&perPage=10`);
     return response.data;
 };
 
@@ -28,7 +27,31 @@ export const createCheckupsService = async ({ axios, params }: IRequest<ICheckup
     return response.data;
 };
 
+export const upadateheckupService = async ({
+    axios,
+    params: { data, id },
+}: IRequest<{ data: IEditCheckupForm; id: number | string }>): Promise<IResponse<ICheckup>> => {
+    const formData = new FormData();
+
+    formData.append("notes", data.notes);
+    formData.append("playerId", data.player.id.toString());
+    formData.append("tests", data.tests);
+    formData.append("results", data.results);
+
+    const response = await axios.patch(`/checkup/${id}`, formData, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    return response.data;
+};
+
 export const getCheckupDetailsService = async ({ axios, params }: IRequest<{ id: number | string }>): Promise<IResponse<ICheckupDetails>> => {
     const response = await axios.get(`/checkup/${params.id}`);
+    return response.data;
+};
+
+export const deleteCheckupService = async ({ axios, params: { id } }: IRequest<{ id: number | string }>): Promise<IResponse<void>> => {
+    const response = await axios.delete(`/checkup/${id}`);
     return response.data;
 };

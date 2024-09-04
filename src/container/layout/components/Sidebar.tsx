@@ -1,9 +1,10 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Squares2X2Icon from "@heroicons/react/24/outline/Squares2X2Icon";
-import logo from "../../../assets/icons/logo192.png";
 import UserGroup from "@heroicons/react/24/outline/UserGroupIcon";
 import Shield from "@heroicons/react/24/outline/ShieldCheckIcon";
+import band from "@/assets/icons/resistance-band.png";
+import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { useAuthStore } from "../../../store/authStore";
 import { USER_ROLE } from "../../../global/user.types";
 import { useMemo } from "react";
@@ -28,8 +29,8 @@ const Sidebar = () => {
 
                 <li className="mb-2 font-semibold text-xl">
                     <Link to={"/"}>
-                        <img className="mask mask-squircle w-10" src={logo} alt="DashWind Logo" />
-                        DashWind
+                        <img className="mask mask-squircle w-10" src={band} alt="DashWind Logo" />
+                        {user?.name}
                     </Link>{" "}
                 </li>
                 <li className="">
@@ -58,6 +59,14 @@ const Sidebar = () => {
                         </NavLink>
                     </li>
                 )}
+                <li className="">
+                    <NavLink end to={"/perfil"} className={({ isActive }) => `${isActive ? "font-semibold  bg-base-200 " : "font-normal"}`}>
+                        <UserIcon className="h-6 w-6" /> Perfil
+                        {location.pathname === "/perfil" ? (
+                            <span className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary " aria-hidden="true"></span>
+                        ) : null}
+                    </NavLink>
+                </li>
             </ul>
         </div>
     );

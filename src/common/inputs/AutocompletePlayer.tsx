@@ -1,18 +1,18 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import Input from "../../../common/inputs/Input";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { searchPlayersService } from "../../../services/player";
+import Input from "./Input";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { searchPlayersService } from "../../services/player";
 import { skipToken, useQuery } from "@tanstack/react-query";
-import useDebounce from "../../../hooks/useDebouncedValue";
-import { IPlayer } from "../../../global/player.types";
-import AutocompleteOption from "./AutocompleteOption";
+import useDebounce from "../../hooks/useDebouncedValue";
+import { IPlayer } from "../../global/player.types";
+import AutocompleteOption from "../../pages/AddNewCheckupPage/components/AutocompleteOption";
 
 interface Props {
     onSelectPlayer: (player: IPlayer | null) => void;
     value: IPlayer;
 }
 
-const Autocomplete = ({ onSelectPlayer, value }: Props) => {
+const AutocompletePlayer = ({ onSelectPlayer, value }: Props) => {
     const [search, setSearch] = useState("");
     const [showResults, setShowResults] = useState(false);
     const searchPlayers = useAxiosPrivate(searchPlayersService);
@@ -60,4 +60,4 @@ const Autocomplete = ({ onSelectPlayer, value }: Props) => {
     );
 };
 
-export default Autocomplete;
+export default AutocompletePlayer;

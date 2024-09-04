@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { ICheckup } from "../../../global/checkups.types";
 import dayjs from "dayjs";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
@@ -6,13 +6,20 @@ import PencilSquareIcon from "@heroicons/react/24/outline/PencilSquareIcon";
 import DocumentMagnifyingGlassIcon from "@heroicons/react/24/outline/DocumentMagnifyingGlassIcon";
 import { Link } from "react-router-dom";
 import PlayerStatusBadge from "../../../common/badges/PlayerStatusBadge";
+import { ILoggedUser } from "@/global/auth.types";
+import soccerPlayer from "@/assets/icons/soccer-player.png";
 
 interface Props {
     checkup: ICheckup;
+    onDeleteCheckup: (checkup: ICheckup) => void;
+    user: ILoggedUser;
 }
 
-const CheckupRow = ({ checkup }: Props) => {
+const CheckupRow = ({ checkup, onDeleteCheckup, user }: Props) => {
     const formattedDate = useMemo(() => dayjs(checkup.createdAt).format("DD MMM YY"), [checkup.createdAt]);
+    const isMine = useMemo(() => {
+        return checkup.createdBy.id === user.id;
+    }, [checkup]);
 
     return (
         <tr>
@@ -20,14 +27,7 @@ const CheckupRow = ({ checkup }: Props) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img
-                                src={
-                                    checkup.player.avatar
-                                        ? checkup.player.avatar
-                                        : "https://previews.123rf.com/images/graphicbee/graphicbee1707/graphicbee170700074/83672878-consulta-de-doctor-mujer-consulta-m%C3%A9dica-entre-el-m%C3%A9dico-y-su-paciente-en-el-escritorio.jpg"
-                                }
-                                alt="Avatar"
-                            />
+                            <img src={checkup.player.avatar ? checkup.player.avatar : soccerPlayer} alt="Avatar" />
                         </div>
                     </div>
                     <div>
@@ -51,7 +51,7 @@ const CheckupRow = ({ checkup }: Props) => {
             <td className="">
                 <p className="overflow-hidden whitespace-nowrap text-ellipsis  max-w-52">{checkup.results}</p>
             </td>
-            <td className="text-center min-w-44">
+            <td className={`${isMine ? "text-center" : "text-left"} min-w-44`}>
                 <div className="tooltip" data-tip="Ver detalles de consulta">
                     <Link to={`/consulta/${checkup.id}`}>
                         <button className="btn btn-square btn-ghost">
@@ -59,16 +59,22 @@ const CheckupRow = ({ checkup }: Props) => {
                         </button>
                     </Link>
                 </div>
-                <div className="tooltip" data-tip="Editar consulta">
-                    <button className="btn btn-square btn-ghost">
-                        <PencilSquareIcon className="w-5" />
-                    </button>
-                </div>
-                <div className="tooltip" data-tip="Eliminar consulta">
-                    <button className="btn btn-square btn-ghost">
-                        <TrashIcon className="w-5" />
-                    </button>
-                </div>
+                {isMine && (
+                    <Fragment>
+                        <div className="tooltip" data-tip="Editar consulta">
+                            <Link to={`/editar-consulta/${checkup.id}`}>
+                                <button className="btn btn-square btn-ghost">
+                                    <PencilSquareIcon className="w-5" />
+                                </button>
+                            </Link>
+                        </div>
+                        <div className="tooltip" data-tip="Eliminar consulta">
+                            <button className="btn btn-square btn-ghost" onClick={() => onDeleteCheckup(checkup)}>
+                                <TrashIcon className="w-5" />
+                            </button>
+                        </div>
+                    </Fragment>
+                )}
             </td>
         </tr>
     );
