@@ -11,6 +11,7 @@ import { BodyType, useModalStore } from "@/store/modalStore";
 import { useAuthStore } from "@/store/authStore";
 import EmptyTableText from "@/common/texts/EmptyTableText";
 import ErrorMessage from "@/common/texts/ErrorMessage";
+import LoadingIndicator from "@/common/loading/LoadingIndicator";
 
 const HomePage = () => {
     const [page, setPage] = useState(1);
@@ -42,6 +43,10 @@ const HomePage = () => {
     }, []);
 
     if (!user) return null;
+
+    if (checkuQuery.isPending) {
+        return <LoadingIndicator />;
+    }
 
     return (
         <div>

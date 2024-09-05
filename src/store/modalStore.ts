@@ -4,9 +4,11 @@ import { IPlayer } from "@/global/player.types";
 import { create } from "zustand";
 
 export enum BodyType {
-    ADD_NEW_CHECKUP= "ADD_NEW_CHECKUP",
+    ADD_NEW_CHECKUP = "ADD_NEW_CHECKUP",
     DELETE_CHECKUP = "DELETE_CHECKUP",
+    DELETE_PLAYER = "DELETE_PLAYER",
     DELETE_ASSET = "DELETE_ASSET",
+    EDIT_PLAYER = "EDIT_PLAYER",
     ADD_PLAYER = "ADD_PLAYER",
     DEFAULT = "DEFAULT",
 }
@@ -15,10 +17,14 @@ export interface ExtraDataCheckup {
     type: "DeleteCheckup";
     data: ICheckup;
 }
+
 export interface ExtraDataPlayer {
-    type: "DeletePlayer";
+    type: "player";
     data: IPlayer;
+    page: number;
 }
+
+
 export interface ExtraDataAsset {
     type: "DeleteAsset";
     data: ICheckupMedia;

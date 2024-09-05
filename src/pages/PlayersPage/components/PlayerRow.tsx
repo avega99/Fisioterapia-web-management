@@ -4,13 +4,16 @@ import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import dayjs from "dayjs";
 import soccerPlayer from "@/assets/icons/soccer-player.png";
 import { useMemo } from "react";
+import { DocumentMagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 interface Props {
     player: IPlayer;
     hasWritePermissions: boolean;
+    openDeleteModal: (player: IPlayer) => void;
+    openEditModal: (player: IPlayer) => void;
 }
 
-const PlayerRow = ({ player, hasWritePermissions }: Props) => {
+const PlayerRow = ({ player, hasWritePermissions, openDeleteModal, openEditModal }: Props) => {
     const formattedDate = useMemo(() => dayjs(player.createdAt).format("DD MMM YY"), [player.createdAt]);
     const category = useMemo(() => {
         return player.category == PLAYER_CATEGORY.SUB_19 ? "Sub 19" : "Sub 23";
@@ -39,11 +42,23 @@ const PlayerRow = ({ player, hasWritePermissions }: Props) => {
             <td>{formattedDate}</td>
 
             <td>
-                {hasWritePermissions && (
+                <div className="tooltip" data-tip="Ver historial de consultas del jugador">
                     <button className="btn btn-square btn-ghost">
-                        <TrashIcon className="w-5" />
+                        <DocumentMagnifyingGlassIcon className="w-5" />
                     </button>
+                </div>
+                {hasWritePermissions && (
+                    <div className="tooltip" data-tip="Eliminar jugador">
+                        <button className="btn btn-square btn-ghost" onClick={() => openDeleteModal(player)}>
+                            <TrashIcon className="w-5" />
+                        </button>
+                    </div>
                 )}
+                <div className="tooltip" data-tip="Editar jugador">
+                    <button className="btn btn-square btn-ghost" onClick={() => openEditModal(player)}>
+                        <PencilSquareIcon className="w-5" />
+                    </button>
+                </div>
             </td>
         </tr>
     );

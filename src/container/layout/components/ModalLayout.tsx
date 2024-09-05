@@ -3,6 +3,8 @@ import AddNewCheckup from "../../../pages/HomePage/components/AddNewCheckup";
 import { BodyType, useModalStore } from "../../../store/modalStore";
 import DeleteAssetModal from "@/pages/EditCheckupAssetsPage/components/DeleteAssetModal";
 import AddPlayer from "@/pages/PlayersPage/components/AddPlayer";
+import DeletePlayer from "@/pages/PlayersPage/components/DeletePlayer";
+import EditPlayer from "@/pages/PlayersPage/components/EditPlayer";
 
 const ModalLayout = () => {
     const { bodyType, isOpen, size, title, closeModal } = useModalStore((state) => state);
@@ -20,6 +22,8 @@ const ModalLayout = () => {
                             [BodyType.DELETE_CHECKUP]: <DeleteConfirmationModal closeModal={closeModal} />,
                             [BodyType.DELETE_ASSET]: <DeleteAssetModal closeModal={closeModal} />,
                             [BodyType.ADD_PLAYER]: <AddPlayer closeModal={closeModal} />,
+                            [BodyType.DELETE_PLAYER]: <DeletePlayer closeModal={closeModal} />,
+                            [BodyType.EDIT_PLAYER]: <EditPlayer closeModal={closeModal} />,
                             [BodyType.DEFAULT]: <div></div>,
                         }[bodyType]
                     }

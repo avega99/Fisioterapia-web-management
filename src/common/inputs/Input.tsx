@@ -5,13 +5,17 @@ export interface InputProps extends React.HTMLProps<HTMLInputElement> {
     label: string;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ label, containerStyle, ...inputProps }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ label, containerStyle, className, ...inputProps }, ref) => {
     return (
         <div className={`form-control w-full ${containerStyle}`}>
             <label className="label">
-                <span className={"label-text text-base-content "}>{label}</span>
+                <span className={"label-text text-base-content"}>{label}</span>
             </label>
-            <input ref={ref} {...inputProps} className="input  input-bordered w-full" />
+            {inputProps.type == "file" ? (
+                <input ref={ref} {...inputProps} className={`file-input file-input-bordered w-full${className}`} />
+            ) : (
+                <input ref={ref} {...inputProps} className={`input  input-bordered w-full ${className}`} />
+            )}
         </div>
     );
 });

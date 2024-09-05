@@ -1,44 +1,59 @@
 import Input from "@/common/inputs/Input";
 import Select from "@/common/inputs/Select";
 import ErrorText from "@/common/texts/ErrorText";
-import { IResponse } from "@/global/common.types";
-import { IPlayerForm, PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { createPlayersService } from "@/services/player";
+import { IEditPlayerForm, PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
+import { useModalStore } from "@/store/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import user from "@/assets/icons/user.png";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { updatePlayersService } from "@/services/player";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
+import { IResponse } from "@/global/common.types";
+import { getPhotoString } from "../utils";
 
 interface Props {
     closeModal: VoidFunction;
 }
 
-const AddPlayer = ({ closeModal }: Props) => {
-    const createPlayer = useAxiosPrivate(createPlayersService);
+const EditPlayer = ({ closeModal }: Props) => {
+    const extraData = useModalStore((state) => state.extraData);
     const queryClient = useQueryClient();
-    const form = useForm<IPlayerForm>();
-    const files = form.watch("avatar");
+    const updatePlayer = useAxiosPrivate(updatePlayersService);
+    if (extraData?.type != "player") return null;
 
-    const createMututation = useMutation({
-        mutationFn: createPlayer,
+    const updateMutuation = useMutation({
+        mutationFn: updatePlayer,
         onSuccess: async (data) => {
-            await queryClient.invalidateQueries({ queryKey: ["players", 1] });
+            await queryClient.invalidateQueries({ queryKey: ["players", extraData?.page] });
             toast.success(data.message);
             closeModal();
         },
         onError: (error: AxiosError<IResponse<void>>) => {
-            toast.error(error?.response?.data?.message || "hubo un error al eliminar la consulta");
+            toast.error(error?.response?.data?.message || "hubo un error al editar el jugador");
         },
     });
 
-    const removePhoto = () => {
-        form.setValue("avatar", undefined);
-        form.trigger("avatar");
-    };
+    const form = useForm<IEditPlayerForm>({
+        defaultValues: {
+            avatar: extraData.data.avatar,
+            category: extraData.data.category,
+            last_name: extraData.data.last_name,
+            player_name: extraData.data.player_name,
+            squad_number: extraData.data.squad_number,
+            status: extraData.data.status,
+            id: extraData.data.id,
+        },
+    });
+    const photo = form.watch("avatar");
+    const stringURl = getPhotoString(photo);
 
-    const onSubmit = (data: IPlayerForm) => createMututation.mutate(data);
+    const onSubmit = (data: IEditPlayerForm) => updateMutuation.mutate(data);
+
+    const removePhoto = () => {
+        form.setValue("avatar", "");
+    };
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -49,7 +64,7 @@ const AddPlayer = ({ closeModal }: Props) => {
                     </button>
                     <div className="avatar">
                         <div className="w-24 rounded-full">
-                            <img src={files?.[0] ? URL.createObjectURL(files[0]) : user} alt="Foto de perfil" />
+                            <img src={stringURl ? stringURl : user} alt="Foto de perfil" />
                         </div>
                     </div>
                 </div>
@@ -90,15 +105,15 @@ const AddPlayer = ({ closeModal }: Props) => {
             </div>
 
             <div className="modal-action">
-                <button className="btn btn-ghost" onClick={closeModal} disabled={createMututation.isPending}>
+                <button className="btn btn-ghost" onClick={closeModal} disabled={updateMutuation.isPending}>
                     Cancelar
                 </button>
-                <button type="submit" className="btn btn-primary px-6" disabled={createMututation.isPending}>
-                    {createMututation.isPending ? "Enviando" : "Enviar"}
+                <button type="submit" className="btn btn-primary px-6" disabled={updateMutuation.isPending}>
+                    {updateMutuation.isPending ? "Enviando" : "Editar"}
                 </button>
             </div>
         </form>
     );
 };
 
-export default AddPlayer;
+export default EditPlayer;

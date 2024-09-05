@@ -8,10 +8,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { USER_ROLE } from "@/global/user.types";
 import PlayerRow from "./components/PlayerRow";
+import { IPlayer } from "@/global/player.types";
+import { BodyType, useModalStore } from "@/store/modalStore";
+import ErrorMessage from "@/common/texts/ErrorMessage";
+import LoadingIndicator from "@/common/loading/LoadingIndicator";
 
 const PlayersPage = () => {
     const [page, setPage] = useState(1);
     const setTitle = useHeaderStore((state) => state.setTitle);
+    const openModal = useModalStore((state) => state.openModal);
 
     const user = useAuthStore((state) => state.user);
     const getPlayers = useAxiosPrivate(getPlayersService);
@@ -31,9 +36,24 @@ const PlayersPage = () => {
     );
     const prevPage = useCallback(() => setPage((prev) => prev - 1), []);
 
+    const openDeleteModal = useCallback(
+        (player: IPlayer) => openModal({ title: "Confirmación", bodyType: BodyType.DELETE_PLAYER, extraData: { type: "player", data: player, page } }),
+        [page]
+    );
+
+    const openEditModal = useCallback(
+        (player: IPlayer) =>
+            openModal({ title: "Confirmación", bodyType: BodyType.EDIT_PLAYER, size: "lg", extraData: { type: "player", data: player, page } }),
+        [page]
+    );
+
     useEffect(() => {
         setTitle("Jugadores");
     }, []);
+
+    if (playersQuery.isPending) {
+        return <LoadingIndicator />;
+    }
 
     return (
         <div>
@@ -52,7 +72,16 @@ const PlayersPage = () => {
                         </thead>
                         <tbody>
                             {playersQuery.isSuccess &&
-                                playersQuery.data.data.map((player) => <PlayerRow key={player.id} hasWritePermissions={hasWritePermissions} player={player} />)}
+                                playersQuery.data.data.map((player) => (
+                                    <PlayerRow
+                                        openDeleteModal={openDeleteModal}
+                                        openEditModal={openEditModal}
+                                        key={player.id}
+                                        hasWritePermissions={hasWritePermissions}
+                                        player={player}
+                                    />
+                                ))}
+                            {playersQuery.isError && <td colSpan={6}>{playersQuery.isError && <ErrorMessage />}</td>}
                         </tbody>
                     </table>
                     <div className="flex justify-end mt-8">

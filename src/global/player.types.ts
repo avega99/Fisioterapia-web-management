@@ -22,3 +22,16 @@ export interface IPlayer {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface IPlayerForm {
+    player_name: string;
+    last_name: string;
+    squad_number: string | number;
+    category: PLAYER_CATEGORY;
+    status: PLAYER_STATUS;
+    avatar?: FileList;
+}
+export interface IEditPlayerForm extends Omit<IPlayerForm, "avatar"> {
+    avatar?: string | FileList | null;
+    id: number | string;
+}
