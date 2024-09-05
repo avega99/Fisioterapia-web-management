@@ -1,6 +1,7 @@
 import DeleteConfirmationModal from "@/pages/HomePage/components/DeleteConfirmationModal";
 import AddNewCheckup from "../../../pages/HomePage/components/AddNewCheckup";
 import { BodyType, useModalStore } from "../../../store/modalStore";
+import DeleteAssetModal from "@/pages/EditCheckupAssetsPage/components/DeleteAssetModal";
 
 const ModalLayout = () => {
     const { bodyType, isOpen, size, title, closeModal } = useModalStore((state) => state);
@@ -16,6 +17,7 @@ const ModalLayout = () => {
                         {
                             [BodyType.ADD_NEW_PLAYER]: <AddNewCheckup closeModal={closeModal} />,
                             [BodyType.DELETE_CHECKUP]: <DeleteConfirmationModal closeModal={closeModal} />,
+                            [BodyType.DELETE_ASSET]: <DeleteAssetModal closeModal={closeModal} />,
                             [BodyType.DEFAULT]: <div></div>,
                         }[bodyType]
                     }

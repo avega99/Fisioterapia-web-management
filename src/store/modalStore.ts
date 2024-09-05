@@ -1,3 +1,4 @@
+import { ICheckupMedia } from "@/global/checkupMedia.interfaces";
 import { ICheckup } from "@/global/checkups.types";
 import { IPlayer } from "@/global/player.types";
 import { create } from "zustand";
@@ -5,6 +6,7 @@ import { create } from "zustand";
 export enum BodyType {
     ADD_NEW_PLAYER = "ADD_NEW_PLAYER",
     DELETE_CHECKUP = "DELETE_CHECKUP",
+    DELETE_ASSET = "DELETE_ASSET",
     DEFAULT = "DEFAULT",
 }
 
@@ -12,12 +14,16 @@ export interface ExtraDataCheckup {
     type: "DeleteCheckup";
     data: ICheckup;
 }
-export interface ExtradDataPlayer {
+export interface ExtraDataPlayer {
     type: "DeletePlayer";
     data: IPlayer;
 }
+export interface ExtraDataAsset {
+    type: "DeleteAsset";
+    data: ICheckupMedia;
+}
 
-export type ExtraDataModal = ExtraDataCheckup | ExtradDataPlayer;
+export type ExtraDataModal = ExtraDataCheckup | ExtraDataPlayer | ExtraDataAsset;
 
 export interface IModal {
     title: string;

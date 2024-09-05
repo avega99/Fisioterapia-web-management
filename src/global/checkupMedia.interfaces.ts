@@ -9,3 +9,8 @@ export interface ICheckupMedia {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface IMediaForm {
+    files: FileList;
+    checkupId: number | string;
+}
