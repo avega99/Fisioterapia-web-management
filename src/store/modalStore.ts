@@ -4,9 +4,10 @@ import { IPlayer } from "@/global/player.types";
 import { create } from "zustand";
 
 export enum BodyType {
-    ADD_NEW_PLAYER = "ADD_NEW_PLAYER",
+    ADD_NEW_CHECKUP= "ADD_NEW_CHECKUP",
     DELETE_CHECKUP = "DELETE_CHECKUP",
     DELETE_ASSET = "DELETE_ASSET",
+    ADD_PLAYER = "ADD_PLAYER",
     DEFAULT = "DEFAULT",
 }
 

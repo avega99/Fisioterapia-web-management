@@ -9,6 +9,7 @@ import PlayerStatusBadge from "@/common/badges/PlayerStatusBadge";
 import { PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
 import BackButton from "@/common/buttons/BackButton";
 import { PhotoView } from "react-photo-view";
+import { useAuthStore } from "@/store/authStore";
 
 const playerCategory = {
     [PLAYER_CATEGORY.SUB_19]: "Sub 19",
@@ -22,6 +23,7 @@ const ring = {
 
 const CheckupDetailsPage = () => {
     const setTitle = useHeaderStore((state) => state.setTitle);
+    const user = useAuthStore((state) => state.user);
     const { id } = useParams();
     const getCheckupDetails = useAxiosPrivate(getCheckupDetailsService);
 
@@ -44,6 +46,7 @@ const CheckupDetailsPage = () => {
 
     const images = checkupQuery.data.data.media.filter((asset) => asset.type == "IMAGE");
     const videos = checkupQuery.data.data.media.filter((asset) => asset.type == "VIDEO");
+    const isMine = user?.id === checkupQuery.data.data.createdById;
 
     return (
         checkupQuery.isSuccess && (
@@ -156,9 +159,11 @@ const CheckupDetailsPage = () => {
                             {videos.length == 0 && <h1 className="text-lg font-medium">No hay videos para mostrar</h1>}
                         </div>
                     </div>
-                    <Link className="link link-success" to={`/editar-consulta/${checkupQuery.data.data.id}`}>
-                        Editar esta consulta
-                    </Link>
+                    {isMine && (
+                        <Link className="link link-success" to={`/editar-consulta/${checkupQuery.data.data.id}`}>
+                            Editar esta consulta
+                        </Link>
+                    )}
                 </article>
             </div>
         )

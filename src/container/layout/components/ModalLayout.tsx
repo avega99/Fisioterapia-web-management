@@ -2,6 +2,7 @@ import DeleteConfirmationModal from "@/pages/HomePage/components/DeleteConfirmat
 import AddNewCheckup from "../../../pages/HomePage/components/AddNewCheckup";
 import { BodyType, useModalStore } from "../../../store/modalStore";
 import DeleteAssetModal from "@/pages/EditCheckupAssetsPage/components/DeleteAssetModal";
+import AddPlayer from "@/pages/PlayersPage/components/AddPlayer";
 
 const ModalLayout = () => {
     const { bodyType, isOpen, size, title, closeModal } = useModalStore((state) => state);
@@ -15,9 +16,10 @@ const ModalLayout = () => {
                     <h3 className="font-semibold text-2xl pb-6 text-center">{title}</h3>
                     {
                         {
-                            [BodyType.ADD_NEW_PLAYER]: <AddNewCheckup closeModal={closeModal} />,
+                            [BodyType.ADD_NEW_CHECKUP]: <AddNewCheckup closeModal={closeModal} />,
                             [BodyType.DELETE_CHECKUP]: <DeleteConfirmationModal closeModal={closeModal} />,
                             [BodyType.DELETE_ASSET]: <DeleteAssetModal closeModal={closeModal} />,
+                            [BodyType.ADD_PLAYER]: <AddPlayer closeModal={closeModal} />,
                             [BodyType.DEFAULT]: <div></div>,
                         }[bodyType]
                     }
