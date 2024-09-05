@@ -1,14 +1,11 @@
-import FaceFrownIcon from "@heroicons/react/24/solid/FaceFrownIcon";
+import NotFound from "@/assets/icons/404-error.png";
 
 const NotFoundPage = () => {
     return (
-        <div className="hero h-screen bg-base-200">
-            <div className="hero-content text-accent text-center">
-                <div className="max-w-md">
-                    <FaceFrownIcon className="h-48 w-48 inline-block" />
-                    <h1 className="text-5xl  font-bold">404 - Not Found</h1>
-                </div>
-            </div>
+        <div className="flex flex-1 h-screen w-screen justify-center items-center flex-col gap-9 p-10">
+            <img src={NotFound} alt="Unauthorized" className="max-w-96 w-full h-auto" />
+            <h1 className="text-5xl max-w-96  text-center text-error font-bold">Página no encontrada</h1>
+            <h4 className="text-center font-semibold">Lo sentimos, pero la página que estás buscando no existe o ha sido movida.</h4>
         </div>
     );
 };

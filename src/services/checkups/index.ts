@@ -2,7 +2,7 @@ import { IPaginatedResponse, IRequest, IResponse } from "../../global/common.typ
 import { ICheckup, ICheckupDetails, ICheckupForm, IEditCheckupForm } from "../../global/checkups.types";
 
 export const getCheckupsService = async ({ axios, params: { page } }: IRequest<{ page: number }>): Promise<IPaginatedResponse<ICheckup[]>> => {
-    const response = await axios.get(`/checkup?page=${page}&perPage=10`);
+    const response = await axios.get(`/checkup?page=${page}&perPage=6`);
     return response.data;
 };
 

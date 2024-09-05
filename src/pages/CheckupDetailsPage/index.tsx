@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { getCheckupDetailsService } from "../../services/checkups";
 import { useQuery } from "@tanstack/react-query";
@@ -140,6 +140,7 @@ const CheckupDetailsPage = () => {
                                     </PhotoView>
                                 ))}
                             </div>
+                            {images.length == 0 && <h1 className="text-lg font-medium">No hay imagenes para mostrar</h1>}
                         </div>
                         <div>
                             <h2>Videos</h2>
@@ -152,8 +153,12 @@ const CheckupDetailsPage = () => {
                                     </div>
                                 ))}
                             </div>
+                            {videos.length == 0 && <h1 className="text-lg font-medium">No hay videos para mostrar</h1>}
                         </div>
                     </div>
+                    <Link className="link link-success" to={`/editar-consulta/${checkupQuery.data.data.id}`}>
+                        Editar esta consulta
+                    </Link>
                 </article>
             </div>
         )

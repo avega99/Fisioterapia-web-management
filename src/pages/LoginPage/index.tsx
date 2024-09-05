@@ -86,7 +86,7 @@ const LoginPgae = () => {
                             ) : (
                                 loginMutuation.isError && <ErrorText>No server response</ErrorText>
                             )}
-                            <button type="submit" className={"btn mt-2 w-full btn-primary" + (loginMutuation.isPending ? " loading" : "")}>
+                            <button type="submit" className={"btn mt-2 w-full btn-primary"} disabled={loginMutuation.isPending}>
                                 Login
                             </button>
 

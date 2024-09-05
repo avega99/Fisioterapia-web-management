@@ -3,6 +3,7 @@ import TitleCard from "@/common/cards/TitleCard";
 import AutocompletePlayer from "@/common/inputs/AutocompletePlayer";
 import Textarea from "@/common/inputs/Textarea";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
+import ErrorMessage from "@/common/texts/ErrorMessage";
 import ErrorText from "@/common/texts/ErrorText";
 import { IEditCheckupForm } from "@/global/checkups.types";
 import { IResponse } from "@/global/common.types";
@@ -81,7 +82,7 @@ const EditCheckupPage = () => {
     }
 
     if (checkupQuery.isError) {
-        return <div>Error</div>;
+        return <ErrorMessage />;
     }
 
     if (checkupQuery.data.data.createdById !== user?.id) {

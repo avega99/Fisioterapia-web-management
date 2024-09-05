@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import TopSideButtons from "./components/TopSideButtons";
 import { useHeaderStore } from "../../store/headerStore";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-
 import { getCheckupsService } from "../../services/checkups";
 import CheckupRow from "./components/CheckupRow";
 import { useQuery } from "@tanstack/react-query";
-import ErrorText from "@/common/texts/ErrorText";
 import TitleCard from "@/common/cards/TitleCard";
 import { ICheckup } from "@/global/checkups.types";
 import { BodyType, useModalStore } from "@/store/modalStore";
 import { useAuthStore } from "@/store/authStore";
+import EmptyTableText from "@/common/texts/EmptyTableText";
+import ErrorMessage from "@/common/texts/ErrorMessage";
 
 const HomePage = () => {
     const [page, setPage] = useState(1);
@@ -45,7 +45,6 @@ const HomePage = () => {
 
     return (
         <div>
-            {checkuQuery.isError && <ErrorText>errrrooooor</ErrorText>}
             <TitleCard title="Consultas" TopSideButtons={<TopSideButtons />}>
                 <div className="overflow-x-auto w-full">
                     <table className="table w-full ">
@@ -63,11 +62,15 @@ const HomePage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {checkuQuery.isSuccess
-                                ? checkuQuery.data.data.map((checkup) => (
-                                      <CheckupRow user={user} key={checkup.id} checkup={checkup} onDeleteCheckup={onDeleteCheckup} />
-                                  ))
-                                : null}
+                            {checkuQuery.isSuccess ? (
+                                <Fragment>
+                                    {checkuQuery.data.data.map((checkup) => (
+                                        <CheckupRow user={user} key={checkup.id} checkup={checkup} onDeleteCheckup={onDeleteCheckup} />
+                                    ))}
+                                    {checkuQuery.data.data.length == 0 && <EmptyTableText colSpan={10} title="No hay consultas para mostrar" />}
+                                </Fragment>
+                            ) : null}
+                            {checkuQuery.isError && <td colSpan={10}>{checkuQuery.isError && <ErrorMessage />}</td>}
                         </tbody>
                     </table>
                 </div>

@@ -80,7 +80,6 @@ const AddNewCheckupPage = () => {
                         <div>
                             <input
                                 {...register("assets", {
-                                    required: true,
                                     validate: {
                                         matchMedia: (files) => files.length <= 5 || "Solo puedes subir hasta 5 archivos",
                                     },

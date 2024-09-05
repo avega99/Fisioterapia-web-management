@@ -1,5 +1,6 @@
 import TitleCard from "@/common/cards/TitleCard";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
+import ErrorMessage from "@/common/texts/ErrorMessage";
 import ErrorText from "@/common/texts/ErrorText";
 import { ICheckupMedia, IMediaForm } from "@/global/checkupMedia.interfaces";
 import { IResponse } from "@/global/common.types";
@@ -83,7 +84,7 @@ const EditCheckupAssetsPage = () => {
     }
 
     if (assetsQuery.isError || checkupQuery.isError) {
-        return <div>handler error</div>;
+        return <ErrorMessage />;
     }
     if (!assetsQuery.isSuccess || !checkupQuery.isSuccess || !user) return null;
 
@@ -95,7 +96,7 @@ const EditCheckupAssetsPage = () => {
                 <TitleCard title="Assets" showBack>
                     <div className="flex flex-col gap-5">
                         <div>
-                            <h1 className="text-xl my-5">Imagenes</h1>
+                            <h1 className="text-xl my-5 font-medium">Imagenes</h1>
                             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 md:gap-10">
                                 {assetsQuery.data.images.map((image) => (
                                     <div className="flex flex-col  gap-4" key={image.id}>
@@ -108,10 +109,11 @@ const EditCheckupAssetsPage = () => {
                                     </div>
                                 ))}
                             </div>
+                            {assetsQuery.data.images.length == 0 && <h1 className="text-lg font-medium">No hay imagenes para mostrar</h1>}
                         </div>
                         <div className="divider"></div>
                         <div>
-                            <h1 className="text-xl my-5">Videos</h1>
+                            <h1 className="text-xl my-5 font-medium">Videos</h1>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
                                 {assetsQuery.data.videos.map((video) => (
                                     <div className="flex flex-col  gap-4" key={video.id}>
@@ -123,14 +125,14 @@ const EditCheckupAssetsPage = () => {
                                         </button>
                                     </div>
                                 ))}
-                                {assetsQuery.data.videos.length == 0 && <div>No hay videos</div>}
+                                {assetsQuery.data.videos.length == 0 && <h1 className="text-lg font-medium">No hay videos para mostrar</h1>}
                             </div>
                         </div>
                     </div>
                     <div className="divider"></div>
                     <form action="" onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="mt-5">
-                            <h1 className="text-xl my-5">Agregar archivos</h1>
+                            <h1 className="text-xl my-5 font-medium">Agregar archivos</h1>
                             <input
                                 {...form.register("files", {
                                     required: true,
@@ -142,7 +144,7 @@ const EditCheckupAssetsPage = () => {
                                 accept="image/*,video/*"
                                 multiple
                                 className="file-input file-input-bordered w-full max-w-xs"
-                                disabled={maxFiles === 5}
+                                disabled={maxFiles === 0}
                             />
                             {form.formState.errors.files && (
                                 <ErrorText>
