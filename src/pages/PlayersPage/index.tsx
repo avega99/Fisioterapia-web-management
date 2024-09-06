@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { USER_ROLE } from "@/global/user.types";
 import PlayerRow from "./components/PlayerRow";
-import { IPlayer, PLAYER_CATEGORY } from "@/global/player.types";
+import { IPlayer } from "@/global/player.types";
 import { BodyType, useModalStore } from "@/store/modalStore";
 import ErrorMessage from "@/common/texts/ErrorMessage";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
