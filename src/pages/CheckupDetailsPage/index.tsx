@@ -10,6 +10,8 @@ import { PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
 import BackButton from "@/common/buttons/BackButton";
 import { PhotoView } from "react-photo-view";
 import { useAuthStore } from "@/store/authStore";
+import doctor from "@/assets/icons/doctor.png";
+import player from "@/assets/icons/soccer-player.png";
 
 const playerCategory = {
     [PLAYER_CATEGORY.SUB_19]: "Sub 19",
@@ -71,11 +73,7 @@ const CheckupDetailsPage = () => {
                                                 } ring-offset-base-100 max-w-44 rounded-full ring ring-offset-2 `}
                                             >
                                                 <img
-                                                    src={
-                                                        checkupQuery.data.data.player.avatar
-                                                            ? checkupQuery.data.data.player.avatar
-                                                            : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                                                    }
+                                                    src={checkupQuery.data.data.player.avatar ? checkupQuery.data.data.player.avatar : player}
                                                     alt="Foto de perfil jugador"
                                                 />
                                             </div>
@@ -105,7 +103,7 @@ const CheckupDetailsPage = () => {
                                     <div className="avatar not-prose ml-2 mb-4">
                                         <div className={`ring-primary ring-offset-base-100 max-w-44 rounded-full ring ring-offset-2`}>
                                             <img
-                                                src={"https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                                                src={checkupQuery.data.data.createdBy.avatar ? checkupQuery.data.data.createdBy.avatar : doctor}
                                                 alt="Foto de perfil jugador"
                                             />
                                         </div>

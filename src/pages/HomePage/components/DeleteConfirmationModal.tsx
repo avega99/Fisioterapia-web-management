@@ -12,13 +12,13 @@ interface Props {
 
 const DeleteConfirmationModal = ({ closeModal }: Props) => {
     const queryClient = useQueryClient();
-    const data = useModalStore((state) => state.extraData);
+    const extraData = useModalStore((state) => state.extraData);
     const deleteCheckup = useAxiosPrivate(deleteCheckupService);
 
     const deleteMutuation = useMutation({
         mutationFn: deleteCheckup,
         onSuccess: async (data) => {
-            await queryClient.invalidateQueries({ queryKey: ["checkups"] });
+            await queryClient.invalidateQueries({ queryKey: extraData?.type == "DeleteCheckup" ? extraData.queryKey : [] });
             toast.success(data.message);
             closeModal();
         },
@@ -28,8 +28,8 @@ const DeleteConfirmationModal = ({ closeModal }: Props) => {
     });
 
     const deleteThisCheckup = () => {
-        if (data?.type == "DeleteCheckup") {
-            deleteMutuation.mutate({ id: data.data.id });
+        if (extraData?.type == "DeleteCheckup") {
+            deleteMutuation.mutate({ id: extraData.data.id });
         }
     };
 

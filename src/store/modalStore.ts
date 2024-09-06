@@ -16,6 +16,7 @@ export enum BodyType {
 export interface ExtraDataCheckup {
     type: "DeleteCheckup";
     data: ICheckup;
+    queryKey: (string | number)[];
 }
 
 export interface ExtraDataPlayer {
@@ -23,7 +24,6 @@ export interface ExtraDataPlayer {
     data: IPlayer;
     page: number;
 }
-
 
 export interface ExtraDataAsset {
     type: "DeleteAsset";

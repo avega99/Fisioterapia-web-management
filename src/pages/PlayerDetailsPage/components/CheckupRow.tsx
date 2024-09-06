@@ -1,61 +1,43 @@
-import { Fragment, useMemo } from "react";
-import { ICheckup } from "../../../global/checkups.types";
-import dayjs from "dayjs";
+import doctor from "@/assets/icons/doctor.png";
+import { ILoggedUser } from "@/global/auth.types";
+import { ICheckup } from "@/global/checkups.types";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import PencilSquareIcon from "@heroicons/react/24/outline/PencilSquareIcon";
 import DocumentMagnifyingGlassIcon from "@heroicons/react/24/outline/DocumentMagnifyingGlassIcon";
+import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import PlayerStatusBadge from "../../../common/badges/PlayerStatusBadge";
-import { ILoggedUser } from "@/global/auth.types";
-import soccerPlayer from "@/assets/icons/soccer-player.png";
-import doctor from "@/assets/icons/doctor.png";
+import { Fragment } from "react/jsx-runtime";
+import { useMemo } from "react";
 
 interface Props {
     checkup: ICheckup;
-    onDeleteCheckup: (checkup: ICheckup) => void;
-    user: ILoggedUser;
+    user: ILoggedUser | null;
+    onDeleteCheckup: (data: ICheckup) => void;
 }
 
-const CheckupRow = ({ checkup, onDeleteCheckup, user }: Props) => {
+const CheckupRow = ({ checkup, user, onDeleteCheckup }: Props) => {
     const formattedDate = useMemo(() => dayjs(checkup.createdAt).format("DD MMM YY"), [checkup.createdAt]);
     const isMine = useMemo(() => {
-        return checkup.createdBy.id === user.id;
+        return checkup.createdBy.id === user?.id;
     }, [checkup]);
 
     return (
         <tr>
-            <td className="">
+            <td>
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img src={checkup.player.avatar ? checkup.player.avatar : soccerPlayer} alt="Avatar" />
-                        </div>
-                    </div>
-                    <div>
-                        <div className="font-bold">{checkup.player.player_name}</div>
-                        <div className="text-sm opacity-50">{checkup.player.last_name}</div>
-                    </div>
-                </div>
-            </td>
-            <td className="">{checkup.player.squad_number}</td>
-            <td className="">{formattedDate}</td>
-            <td className="">
-                <PlayerStatusBadge status={checkup.player.status} />
-            </td>
-            <td className="">
-                <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
-                            <img src={checkup.createdBy.avatar ? checkup.createdBy.avatar : doctor} alt="Avatar" />
+                            <img src={doctor} alt="Avatar" />
                         </div>
                     </div>
                     <div>
                         <div className="font-bold">{checkup.createdBy.name}</div>
-                        <div className="text-sm opacity-50">{checkup.createdBy.last_name}</div>
+                        <div className="text-sm opacity-50">poner despues</div>
                     </div>
                 </div>
             </td>
-            <td className="">
+            <td>{formattedDate}</td>
+            <td>
                 <p className="overflow-hidden whitespace-nowrap text-ellipsis max-w-32">{checkup.notes}</p>
             </td>
             <td className="">

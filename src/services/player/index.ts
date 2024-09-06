@@ -6,6 +6,11 @@ export const searchPlayersService = async ({ axios, params: { name } }: IRequest
     return response.data;
 };
 
+export const getPlayerService = async ({ axios, params: { id } }: IRequest<{ id: string | number }>): Promise<IResponse<IPlayer>> => {
+    const response = await axios.get(`/player/${id}`);
+    return response.data;
+};
+
 export const getPlayersService = async ({ axios, params: { page } }: IRequest<{ page: string | number }>): Promise<IPaginatedResponse<IPlayer[]>> => {
     const response = await axios.get(`/player?page=${page}&perPage=6`);
     return response.data;

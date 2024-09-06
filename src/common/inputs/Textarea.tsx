@@ -9,7 +9,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>(({ label, containerStyle
     return (
         <div className={containerStyle}>
             <label className="label">
-                <span className={"label-text text-base-content "}>Tests</span>
+                <span className={"label-text text-base-content "}>{label}</span>
             </label>
             <textarea ref={ref} className="textarea textarea-bordered textarea-ms w-full" {...props}></textarea>
         </div>

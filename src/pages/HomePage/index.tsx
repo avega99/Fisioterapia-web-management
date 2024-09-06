@@ -25,9 +25,16 @@ const HomePage = () => {
         queryFn: () => getCheckups({ page }),
     });
 
-    const onDeleteCheckup = useCallback((checkup: ICheckup) => {
-        openModal({ bodyType: BodyType.DELETE_CHECKUP, title: "Confirmación", extraData: { data: checkup, type: "DeleteCheckup" } });
-    }, []);
+    const onDeleteCheckup = useCallback(
+        (checkup: ICheckup) => {
+            openModal({
+                bodyType: BodyType.DELETE_CHECKUP,
+                title: "Confirmación",
+                extraData: { data: checkup, type: "DeleteCheckup", queryKey: ["checkups", page] },
+            });
+        },
+        [page]
+    );
 
     const nextPage = useCallback(
         () =>
@@ -75,7 +82,13 @@ const HomePage = () => {
                                     {checkuQuery.data.data.length == 0 && <EmptyTableText colSpan={10} title="No hay consultas para mostrar" />}
                                 </Fragment>
                             ) : null}
-                            {checkuQuery.isError && <td colSpan={10}>{checkuQuery.isError && <ErrorMessage />}</td>}
+                            {checkuQuery.isError && (
+                                <tr>
+                                    <td colSpan={10}>
+                                        <ErrorMessage />
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>

@@ -21,6 +21,7 @@ import EditCheckupAssetsPage from "./pages/EditCheckupAssetsPage/index.tsx";
 import "react-photo-view/dist/react-photo-view.css";
 import { PhotoProvider } from "react-photo-view";
 import ProfilePage from "./pages/ProfilePage/index.tsx";
+import PlayerDetailsPage from "./pages/PlayerDetailsPage/index.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -42,6 +43,7 @@ createRoot(document.getElementById("root")!).render(
                                     <Route path="jugadores" element={<PlayersPage />} />
                                     <Route path="/consulta/:id" element={<CheckupDetailsPage />} />
                                     <Route path="/perfil" element={<ProfilePage />} />
+                                    <Route path="/jugador/:id" element={<PlayerDetailsPage />} />
                                 </Route>
                                 <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITE]} />}>
                                     <Route path="agregar-consulta" element={<AddNewCheckupPage />} />

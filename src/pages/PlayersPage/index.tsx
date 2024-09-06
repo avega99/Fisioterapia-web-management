@@ -8,10 +8,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { USER_ROLE } from "@/global/user.types";
 import PlayerRow from "./components/PlayerRow";
-import { IPlayer } from "@/global/player.types";
+import { IPlayer, PLAYER_CATEGORY } from "@/global/player.types";
 import { BodyType, useModalStore } from "@/store/modalStore";
 import ErrorMessage from "@/common/texts/ErrorMessage";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
+import EmptyTableText from "@/common/texts/EmptyTableText";
 
 const PlayersPage = () => {
     const [page, setPage] = useState(1);
@@ -82,18 +83,19 @@ const PlayersPage = () => {
                                     />
                                 ))}
                             {playersQuery.isError && <td colSpan={6}>{playersQuery.isError && <ErrorMessage />}</td>}
+                            {playersQuery.data?.data.length == 0 && <EmptyTableText colSpan={6} title="No hay jugadores para mostrar" />}
                         </tbody>
                     </table>
-                    <div className="flex justify-end mt-8">
-                        <div className="join">
-                            <button onClick={prevPage} disabled={page <= 1} className="join-item btn">
-                                «
-                            </button>
-                            <button className="join-item btn">Página {page}</button>
-                            <button onClick={nextPage} disabled={!playersQuery.data?.pagination.nextPage} className="join-item btn">
-                                »
-                            </button>
-                        </div>
+                </div>
+                <div className="flex justify-end mt-8">
+                    <div className="join">
+                        <button onClick={prevPage} disabled={page <= 1} className="join-item btn">
+                            «
+                        </button>
+                        <button className="join-item btn">Página {page}</button>
+                        <button onClick={nextPage} disabled={!playersQuery.data?.pagination.nextPage} className="join-item btn">
+                            »
+                        </button>
                     </div>
                 </div>
             </TitleCard>

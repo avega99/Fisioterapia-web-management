@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import soccerPlayer from "@/assets/icons/soccer-player.png";
 import { useMemo } from "react";
 import { DocumentMagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 interface Props {
     player: IPlayer;
@@ -41,12 +42,14 @@ const PlayerRow = ({ player, hasWritePermissions, openDeleteModal, openEditModal
             <td>{category}</td>
             <td>{formattedDate}</td>
 
-            <td>
-                <div className="tooltip" data-tip="Ver historial de consultas del jugador">
-                    <button className="btn btn-square btn-ghost">
-                        <DocumentMagnifyingGlassIcon className="w-5" />
-                    </button>
-                </div>
+            <td className="min-w-44">
+                <Link to={`/jugador/${player.id}`}>
+                    <div className="tooltip" data-tip="Ver historial de consultas del jugador">
+                        <button className="btn btn-square btn-ghost">
+                            <DocumentMagnifyingGlassIcon className="w-5" />
+                        </button>
+                    </div>
+                </Link>
                 {hasWritePermissions && (
                     <div className="tooltip" data-tip="Eliminar jugador">
                         <button className="btn btn-square btn-ghost" onClick={() => openDeleteModal(player)}>
