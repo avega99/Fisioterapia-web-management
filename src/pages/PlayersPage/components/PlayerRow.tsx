@@ -3,7 +3,7 @@ import { IPlayer, PLAYER_CATEGORY } from "@/global/player.types";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import dayjs from "dayjs";
 import soccerPlayer from "@/assets/icons/soccer-player.png";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { DocumentMagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
@@ -51,17 +51,19 @@ const PlayerRow = ({ player, hasWritePermissions, openDeleteModal, openEditModal
                     </div>
                 </Link>
                 {hasWritePermissions && (
-                    <div className="tooltip" data-tip="Eliminar jugador">
-                        <button className="btn btn-square btn-ghost" onClick={() => openDeleteModal(player)}>
-                            <TrashIcon className="w-5" />
-                        </button>
-                    </div>
+                    <Fragment>
+                        <div className="tooltip" data-tip="Eliminar jugador">
+                            <button className="btn btn-square btn-ghost" onClick={() => openDeleteModal(player)}>
+                                <TrashIcon className="w-5" />
+                            </button>
+                        </div>
+                        <div className="tooltip" data-tip="Editar jugador">
+                            <button className="btn btn-square btn-ghost" onClick={() => openEditModal(player)}>
+                                <PencilSquareIcon className="w-5" />
+                            </button>
+                        </div>
+                    </Fragment>
                 )}
-                <div className="tooltip" data-tip="Editar jugador">
-                    <button className="btn btn-square btn-ghost" onClick={() => openEditModal(player)}>
-                        <PencilSquareIcon className="w-5" />
-                    </button>
-                </div>
             </td>
         </tr>
     );

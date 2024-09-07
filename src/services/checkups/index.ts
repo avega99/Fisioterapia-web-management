@@ -3,9 +3,18 @@ import { ICheckup, ICheckupDetails, ICheckupForm, IEditCheckupForm } from "../..
 
 export const getCheckupsService = async ({
     axios,
-    params: { page, playerId },
-}: IRequest<{ page: number; playerId?: number | string }>): Promise<IPaginatedResponse<ICheckup[]>> => {
-    const url = playerId ? `/checkup?page=${page}&perPage=6&playerId=${playerId}` : `/checkup?page=${page}&perPage=6`;
+    params: { page, playerId, createdById },
+}: IRequest<{ page: number; playerId?: number | string; createdById?: string | number }>): Promise<IPaginatedResponse<ICheckup[]>> => {
+    const queryParams = new URLSearchParams({
+        page: page.toString(),
+        perPage: "6",
+    });
+
+    if (playerId) queryParams.append("playerId", playerId.toString());
+    if (createdById) queryParams.append("createdById", createdById.toString());
+
+    const url = `/checkup?${queryParams.toString()}`;
+
     const response = await axios.get(url);
     return response.data;
 };

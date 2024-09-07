@@ -44,7 +44,7 @@ const PlayersPage = () => {
 
     const openEditModal = useCallback(
         (player: IPlayer) =>
-            openModal({ title: "Confirmación", bodyType: BodyType.EDIT_PLAYER, size: "lg", extraData: { type: "player", data: player, page } }),
+            openModal({ title: "Editar jugador", bodyType: BodyType.EDIT_PLAYER, size: "lg", extraData: { type: "player", data: player, page } }),
         [page]
     );
 

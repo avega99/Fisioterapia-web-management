@@ -22,6 +22,7 @@ import "react-photo-view/dist/react-photo-view.css";
 import { PhotoProvider } from "react-photo-view";
 import ProfilePage from "./pages/ProfilePage/index.tsx";
 import PlayerDetailsPage from "./pages/PlayerDetailsPage/index.tsx";
+import UserDetailsPage from "./pages/UserDetailsPage/index.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -52,6 +53,7 @@ createRoot(document.getElementById("root")!).render(
                                 </Route>
                                 <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN]} />}>
                                     <Route path="usuarios" element={<UsersPage />} />
+                                    <Route path="usuario/:id" element={<UserDetailsPage />} />
                                 </Route>
                             </Route>
                             <Route path="/unauthorized" element={<UnauthorizedPage />} />

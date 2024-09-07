@@ -11,7 +11,7 @@ import { updatePlayersService } from "@/services/player";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { IResponse } from "@/global/common.types";
-import { getPhotoString } from "../utils";
+import { getPhotoString } from "@/utils/form";
 
 interface Props {
     closeModal: VoidFunction;

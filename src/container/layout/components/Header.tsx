@@ -7,10 +7,13 @@ import { themeChange } from "theme-change";
 import { useHeaderStore } from "../../../store/headerStore";
 import useLogout from "../../../hooks/useLogout";
 import doctor from "@/assets/icons/doctor.png";
+import { useAuthStore } from "@/store/authStore";
+import { USER_ROLE } from "@/global/user.types";
 
 const Header = () => {
     const [currentTheme, setCurrentTheme] = useState(localStorage.getItem("theme"));
     const title = useHeaderStore((state) => state.title);
+    const user = useAuthStore((state) => state.user);
     const logout = useLogout();
 
     useEffect(() => {
@@ -72,7 +75,7 @@ also includes corporate and retro themes in tailwind.config file */}
                 <div className="dropdown dropdown-end ml-4">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img src={doctor} alt="profile" />
+                            <img src={user?.avatar ? user.avatar : doctor} alt="profile" />
                         </div>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
@@ -82,9 +85,11 @@ also includes corporate and retro themes in tailwind.config file */}
                                 {/* <span className="badge">New</span> */}
                             </Link>
                         </li>
-                        <li className="">
-                            <Link to={"/app/settings-billing"}>Usuarios</Link>
-                        </li>
+                        {[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN].includes(user?.role as USER_ROLE) && (
+                            <li className="">
+                                <Link to={"/app/settings-billing"}>Usuarios</Link>
+                            </li>
+                        )}
                         <div className="divider mt-0 mb-0"></div>
                         <li>
                             <a onClick={logout}>Cerrar Sesión</a>

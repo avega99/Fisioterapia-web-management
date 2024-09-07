@@ -23,3 +23,18 @@ export interface IUser {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface IAddUserForm {
+    id: string | number;
+    email: string;
+    name: string;
+    password: string;
+    role: USER_ROLE;
+    status: USER_STATUS;
+    last_name: string;
+    avatar?: FileList;
+}
+
+export interface IEditUserForm extends Omit<IAddUserForm, "avatar" | "password"> {
+    avatar?: FileList | string;
+}

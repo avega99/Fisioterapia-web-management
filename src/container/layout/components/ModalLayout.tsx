@@ -5,6 +5,9 @@ import DeleteAssetModal from "@/pages/EditCheckupAssetsPage/components/DeleteAss
 import AddPlayer from "@/pages/PlayersPage/components/AddPlayer";
 import DeletePlayer from "@/pages/PlayersPage/components/DeletePlayer";
 import EditPlayer from "@/pages/PlayersPage/components/EditPlayer";
+import AddUser from "@/pages/UsersPage/components/AddUser";
+import EditUser from "@/pages/UsersPage/components/EditUser";
+import DeleteUser from "@/pages/UsersPage/components/DeleteUser";
 
 const ModalLayout = () => {
     const { bodyType, isOpen, size, title, closeModal } = useModalStore((state) => state);
@@ -24,6 +27,9 @@ const ModalLayout = () => {
                             [BodyType.ADD_PLAYER]: <AddPlayer closeModal={closeModal} />,
                             [BodyType.DELETE_PLAYER]: <DeletePlayer closeModal={closeModal} />,
                             [BodyType.EDIT_PLAYER]: <EditPlayer closeModal={closeModal} />,
+                            [BodyType.ADD_USER]: <AddUser closeModal={closeModal} />,
+                            [BodyType.EDIT_USER]: <EditUser closeModal={closeModal} />,
+                            [BodyType.DELETE_USER]: <DeleteUser closeModal={closeModal} />,
                             [BodyType.DEFAULT]: <div></div>,
                         }[bodyType]
                     }

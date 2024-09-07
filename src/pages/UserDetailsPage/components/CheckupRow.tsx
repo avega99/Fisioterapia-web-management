@@ -1,4 +1,3 @@
-import doctor from "@/assets/icons/doctor.png";
 import { ILoggedUser } from "@/global/auth.types";
 import { ICheckup } from "@/global/checkups.types";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
@@ -8,6 +7,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 import { useMemo } from "react";
+import player from "@/assets/icons/soccer-player.png";
 
 interface Props {
     checkup: ICheckup;
@@ -27,12 +27,12 @@ const CheckupRow = ({ checkup, user, onDeleteCheckup }: Props) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img src={checkup.createdBy.avatar ? checkup.createdBy.avatar : doctor} alt="Avatar" />
+                            <img src={checkup.player.avatar ? checkup.player.avatar : player} alt="Avatar" />
                         </div>
                     </div>
                     <div>
-                        <div className="font-bold">{checkup.createdBy.name}</div>
-                        <div className="text-sm opacity-50">{checkup.createdBy.last_name}</div>
+                        <div className="font-bold">{checkup.player.player_name}</div>
+                        <div className="text-sm opacity-50">{checkup.player.last_name}</div>
                     </div>
                 </div>
             </td>
