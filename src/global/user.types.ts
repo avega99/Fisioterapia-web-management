@@ -38,3 +38,10 @@ export interface IAddUserForm {
 export interface IEditUserForm extends Omit<IAddUserForm, "avatar" | "password"> {
     avatar?: FileList | string;
 }
+
+export interface IEditMyProfileForm {
+    name: string;
+    last_name: string;
+    email: string;
+    avatar?: FileList | string;
+}

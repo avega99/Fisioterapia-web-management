@@ -1,5 +1,5 @@
 import { IPaginatedResponse, IRequest, IResponse } from "@/global/common.types";
-import { IAddUserForm, IEditUserForm, IUser } from "@/global/user.types";
+import { IAddUserForm, IEditMyProfileForm, IEditUserForm, IUser } from "@/global/user.types";
 
 export const getUsersService = async ({ axios }: IRequest<void>): Promise<IPaginatedResponse<IUser[]>> => {
     const response = await axios.get(`/user`);
@@ -57,6 +57,31 @@ export const editUserService = async ({ axios, params }: IRequest<IEditUserForm>
     formData.append("role", params.role);
 
     const response = await axios.patch(`/user/${params.id}`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    return response.data;
+};
+
+export const editMyProfilerService = async ({ axios, params }: IRequest<IEditMyProfileForm>): Promise<IPaginatedResponse<IUser[]>> => {
+    const formData = new FormData();
+
+    if (typeof params.avatar == "string") {
+        formData.append("avatar", params.avatar);
+    }
+
+    if (params.avatar && typeof params.avatar == "object") {
+        const file = params.avatar?.item(0);
+        if (file) {
+            formData.append("avatar", file);
+        }
+    }
+    formData.append("name", params.name);
+    formData.append("last_name", params.last_name);
+    formData.append("email", params.email);
+
+    const response = await axios.put(`/user`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },

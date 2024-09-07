@@ -8,6 +8,7 @@ import EditPlayer from "@/pages/PlayersPage/components/EditPlayer";
 import AddUser from "@/pages/UsersPage/components/AddUser";
 import EditUser from "@/pages/UsersPage/components/EditUser";
 import DeleteUser from "@/pages/UsersPage/components/DeleteUser";
+import EditMyProfile from "@/pages/ProfilePage/components/EditMyProfile";
 
 const ModalLayout = () => {
     const { bodyType, isOpen, size, title, closeModal } = useModalStore((state) => state);
@@ -30,6 +31,7 @@ const ModalLayout = () => {
                             [BodyType.ADD_USER]: <AddUser closeModal={closeModal} />,
                             [BodyType.EDIT_USER]: <EditUser closeModal={closeModal} />,
                             [BodyType.DELETE_USER]: <DeleteUser closeModal={closeModal} />,
+                            [BodyType.EDIT_ME]: <EditMyProfile closeModal={closeModal} />,
                             [BodyType.DEFAULT]: <div></div>,
                         }[bodyType]
                     }

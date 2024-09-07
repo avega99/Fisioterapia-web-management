@@ -97,7 +97,7 @@ const CheckupDetailsPage = () => {
                             </div>
                             <div>
                                 <h2 className="" id="getstarted1">
-                                    Creado Por
+                                    Atendido Por
                                 </h2>
                                 <div className="flex flex-1 items-center justify-center md:justify-start">
                                     <div className="avatar not-prose ml-2 mb-4">

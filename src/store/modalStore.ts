@@ -14,6 +14,7 @@ export enum BodyType {
     ADD_USER = "ADD_USER",
     EDIT_USER = "EDIT_USER",
     DELETE_USER = "DELETE_USER",
+    EDIT_ME = "EDIT_ME",
     DEFAULT = "DEFAULT",
 }
 
