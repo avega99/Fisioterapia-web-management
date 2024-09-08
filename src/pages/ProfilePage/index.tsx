@@ -16,6 +16,7 @@ import { useAuthStore } from "@/store/authStore";
 import Subtitle from "@/common/texts/Subtitle";
 import { BodyType, useModalStore } from "@/store/modalStore";
 import { useHeaderStore } from "@/store/headerStore";
+import { ICheckup } from "@/global/checkups.types";
 
 const ProfilePage = () => {
     const [page, setPage] = useState(1);
@@ -48,6 +49,17 @@ const ProfilePage = () => {
     const openEditModal = useCallback(() => {
         openModal({ bodyType: BodyType.EDIT_ME, title: "Editar mi perfil" });
     }, []);
+
+    const onDeleteCheckup = useCallback(
+        (checkup: ICheckup) => {
+            openModal({
+                bodyType: BodyType.DELETE_CHECKUP,
+                title: "Confirmación",
+                extraData: { data: checkup, type: "DeleteCheckup", queryKey: ["myCheckups"] },
+            });
+        },
+        [page]
+    );
 
     useEffect(() => {
         setTitle("Mi perfil");
@@ -90,7 +102,7 @@ const ProfilePage = () => {
                             </div>
                             <div>
                                 <button onClick={openEditModal} className="btn btn-primary">
-                                    Editar mis datos
+                                    Editar mi perfil
                                 </button>
                             </div>
                         </div>
@@ -112,7 +124,7 @@ const ProfilePage = () => {
                         </thead>
                         <tbody>
                             {checkupsQuery.data.data.map((checkup) => (
-                                <CheckupRow key={checkup.id} checkup={checkup} user={user} onDeleteCheckup={() => {}} />
+                                <CheckupRow key={checkup.id} checkup={checkup} user={user} onDeleteCheckup={onDeleteCheckup} />
                             ))}
                             {checkupsQuery.data.data.length == 0 && <EmptyTableText title="No hay consultas para mostrar" colSpan={6} />}
                             {checkupsQuery.isError && (
