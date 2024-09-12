@@ -22,6 +22,12 @@ const CheckupRow = ({ checkup, onDeleteCheckup, user }: Props) => {
         return checkup.createdBy.id === user.id;
     }, [checkup]);
 
+    const userAvatar = useMemo(
+        () =>
+            checkup.createdBy.avatar != "" && checkup.createdBy.avatar != null && checkup.createdBy.avatar != "undefined" ? checkup.createdBy.avatar : doctor,
+        [checkup.createdBy.avatar]
+    );
+
     return (
         <tr>
             <td className="">
@@ -46,7 +52,7 @@ const CheckupRow = ({ checkup, onDeleteCheckup, user }: Props) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img src={checkup.createdBy.avatar ? checkup.createdBy.avatar : doctor} alt="Avatar" />
+                            <img src={userAvatar} alt="Avatar" />
                         </div>
                     </div>
                     <div>

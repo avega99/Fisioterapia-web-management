@@ -29,12 +29,14 @@ const ProfilePage = () => {
     const meQuery = useQuery({
         queryKey: ["myProfile"],
         queryFn: () => getMe({ id: user?.id as number }),
+        staleTime: 0,
     });
 
     const checkupsQuery = useQuery({
         queryKey: ["myCheckups"],
         queryFn: () => getCheckups({ page, createdById: meQuery.data?.data.id }),
         enabled: !!meQuery.data?.data.id,
+        staleTime: 0,
     });
 
     const nextPage = useCallback(
@@ -73,16 +75,18 @@ const ProfilePage = () => {
         return <ErrorMessage />;
     }
 
+    if (!meQuery.isSuccess) return;
+
+    const userAvatar =
+        meQuery.data.data.avatar != "" && meQuery.data.data.avatar != null && meQuery.data.data.avatar != "undefined" ? meQuery.data.data.avatar : doctor;
+
     return (
         meQuery.isSuccess && (
             <TitleCard title={`Mi perfil`} showBack>
                 <div className="hero bg-base-200">
                     <div className="hero-content flex-col lg:flex-row">
-                        <PhotoView src={meQuery.data.data.avatar ? meQuery.data.data.avatar : doctor}>
-                            <img
-                                src={meQuery.data.data.avatar ? meQuery.data.data.avatar : doctor}
-                                className="avatar rounded-full w-full aspect-[1] max-w-sm  shadow-2xl"
-                            />
+                        <PhotoView src={userAvatar}>
+                            <img src={userAvatar} className="avatar rounded-full w-full aspect-[1] max-w-sm  shadow-2xl" />
                         </PhotoView>
                         <div className="grid gap-5">
                             <h1 className="text-xl md:text-2xl lg:text-5xl font-bold">{`${meQuery.data.data.name} ${meQuery.data.data.last_name}`}</h1>

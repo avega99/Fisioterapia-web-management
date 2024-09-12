@@ -11,6 +11,7 @@ import { IResponse } from "@/global/common.types";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useModalStore } from "@/store/modalStore";
+import { useAuthStore } from "@/store/authStore";
 
 interface Props {
     closeModal: VoidFunction;
@@ -18,6 +19,7 @@ interface Props {
 
 const AddUser = ({ closeModal }: Props) => {
     const createUser = useAxiosPrivate(createUserService);
+    const user = useAuthStore((state) => state.user);
     const extraData = useModalStore((state) => state.extraData);
     const queryClient = useQueryClient();
     const form = useForm<IAddUserForm>();
@@ -78,6 +80,7 @@ const AddUser = ({ closeModal }: Props) => {
                     <Select type="text" label="Estatus" {...form.register("status", { required: true })}>
                         <option value={USER_STATUS.ACTIVE}>Activo</option>
                         <option value={USER_STATUS.INACTIVE}>Inactivo</option>
+                        {}
                     </Select>
                     {form.formState.errors.status && <ErrorText>El correo es requerido</ErrorText>}
                 </div>
@@ -85,6 +88,7 @@ const AddUser = ({ closeModal }: Props) => {
                     <Select type="text" label="Rol" {...form.register("role", { required: true })}>
                         <option value={USER_ROLE.READ}>Lectura</option>
                         <option value={USER_ROLE.WRITE}>Escritura</option>
+                        {user?.role == USER_ROLE.SUPER_ADMIN && <option value={USER_ROLE.ADMIN}>Administrador</option>}
                     </Select>
                     {form.formState.errors.role && <ErrorText>El role es requerido</ErrorText>}
                 </div>

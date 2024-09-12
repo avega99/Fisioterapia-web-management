@@ -27,7 +27,7 @@ import UserDetailsPage from "./pages/UserDetailsPage/index.tsx";
 const queryClient = new QueryClient({
     defaultOptions: {
         mutations: { retry: false },
-        queries: { retry: false, refetchOnWindowFocus: false, staleTime: 120000 },
+        queries: { retry: false, refetchOnWindowFocus: true, staleTime: 120000 },
     },
 });
 

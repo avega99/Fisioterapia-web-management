@@ -3,7 +3,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { getCheckupDetailsService } from "../../services/checkups";
 import { useQuery } from "@tanstack/react-query";
 import { useHeaderStore } from "../../store/headerStore";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
 import PlayerStatusBadge from "@/common/badges/PlayerStatusBadge";
 import { PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
@@ -49,6 +49,12 @@ const CheckupDetailsPage = () => {
     const images = checkupQuery.data.data.media.filter((asset) => asset.type == "IMAGE");
     const videos = checkupQuery.data.data.media.filter((asset) => asset.type == "VIDEO");
     const isMine = user?.id === checkupQuery.data.data.createdById;
+    const userAvatar =
+        checkupQuery.data.data.createdBy.avatar != "" &&
+        checkupQuery.data.data.createdBy.avatar != null &&
+        checkupQuery.data.data.createdBy.avatar != "undefined"
+            ? checkupQuery.data.data.createdBy.avatar
+            : doctor;
 
     return (
         checkupQuery.isSuccess && (
@@ -102,10 +108,7 @@ const CheckupDetailsPage = () => {
                                 <div className="flex flex-1 items-center justify-center md:justify-start">
                                     <div className="avatar not-prose ml-2 mb-4">
                                         <div className={`ring-primary ring-offset-base-100 max-w-44 rounded-full ring ring-offset-2`}>
-                                            <img
-                                                src={checkupQuery.data.data.createdBy.avatar ? checkupQuery.data.data.createdBy.avatar : doctor}
-                                                alt="Foto de perfil jugador"
-                                            />
+                                            <img src={userAvatar} alt="Foto de perfil jugador" />
                                         </div>
                                     </div>
                                 </div>

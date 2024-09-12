@@ -22,6 +22,7 @@ const UsersPage = () => {
     const usersQuery = useQuery({
         queryKey: ["users", page],
         queryFn: () => getUsers(),
+        staleTime: 0,
     });
 
     const nextPage = useCallback(

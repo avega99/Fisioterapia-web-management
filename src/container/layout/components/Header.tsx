@@ -16,6 +16,8 @@ const Header = () => {
     const user = useAuthStore((state) => state.user);
     const logout = useLogout();
 
+    const userAvatar = user?.avatar != "" && user?.avatar != null && user?.avatar != "undefined" ? user?.avatar : doctor;
+
     useEffect(() => {
         themeChange(false);
         if (currentTheme === null) {
@@ -26,6 +28,7 @@ const Header = () => {
             }
         }
     }, []);
+
     return (
         <div className="navbar sticky top-0 bg-base-100  z-10 shadow-md ">
             {/* Menu toogle for mobile view or small screen */}
@@ -75,7 +78,7 @@ also includes corporate and retro themes in tailwind.config file */}
                 <div className="dropdown dropdown-end ml-4">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img src={user?.avatar ? user.avatar : doctor} alt="profile" />
+                            <img src={userAvatar} alt="profile" />
                         </div>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">

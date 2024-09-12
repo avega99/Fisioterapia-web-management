@@ -76,7 +76,7 @@ const PlayerDetailsPage = () => {
     return (
         <Fragment>
             {playerQuery.isSuccess && (
-                <TitleCard title={`Consultas de ${playerQuery.data.data.player_name} ${playerQuery.data.data.last_name}`} showBack>
+                <TitleCard title={`Consultas del jugador ${playerQuery.data.data.player_name} ${playerQuery.data.data.last_name}`} showBack>
                     <div className="hero bg-base-200">
                         <div className="hero-content flex-col lg:flex-row">
                             <PhotoView src={playerQuery.data.data.avatar ? playerQuery.data.data.avatar : UserImage}>

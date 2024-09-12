@@ -23,7 +23,7 @@ const EditMyProfile = ({ closeModal }: Props) => {
 
     const form = useForm<IEditMyProfileForm>({
         defaultValues: {
-            avatar: user?.avatar || "",
+            avatar: user?.avatar && user.avatar !== "undefined" ? user.avatar : "",
             email: user?.email,
             last_name: user?.last_name,
             name: user?.name,

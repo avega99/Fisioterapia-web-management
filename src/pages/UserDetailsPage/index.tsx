@@ -55,77 +55,79 @@ const UserDetailsPage = () => {
         return <ErrorMessage />;
     }
 
+    if (!userQuery.isSuccess) return;
+
+    const myAvatar =
+        userQuery?.data.data.avatar != "" && userQuery?.data.data.avatar != null && userQuery?.data.data.avatar != "undefined"
+            ? userQuery?.data.data.avatar
+            : doctor;
+
     return (
-        userQuery.isSuccess && (
-            <TitleCard title={`Consultas realizadas por ${userQuery.data.data.name} ${userQuery.data.data.last_name}`} showBack>
-                <div className="hero bg-base-200">
-                    <div className="hero-content flex-col lg:flex-row">
-                        <PhotoView src={userQuery.data.data.avatar ? userQuery.data.data.avatar : doctor}>
-                            <img
-                                src={userQuery.data.data.avatar ? userQuery.data.data.avatar : doctor}
-                                className="avatar rounded-full w-full aspect-[1] max-w-sm  shadow-2xl"
-                            />
-                        </PhotoView>
-                        <div className="grid gap-5">
-                            <h1 className="text-xl md:text-2xl lg:text-5xl font-bold">{`${userQuery.data.data.name} ${userQuery.data.data.last_name}`}</h1>
-                            <div className="flex gap-5">
-                                <span className="font-semibold">Estatus:</span>
-                                <div className="text-center lg:text-left">
-                                    <UserStatusBadge status={userQuery.data.data.status} />
-                                </div>
+        <TitleCard title={`Consultas realizadas por ${userQuery.data.data.name} ${userQuery.data.data.last_name}`} showBack>
+            <div className="hero bg-base-200">
+                <div className="hero-content flex-col lg:flex-row">
+                    <PhotoView src={userQuery.data.data.avatar ? userQuery.data.data.avatar : doctor}>
+                        <img src={myAvatar} className="avatar rounded-full w-full aspect-[1] max-w-sm  shadow-2xl" />
+                    </PhotoView>
+                    <div className="grid gap-5">
+                        <h1 className="text-xl md:text-2xl lg:text-5xl font-bold">{`${userQuery.data.data.name} ${userQuery.data.data.last_name}`}</h1>
+                        <div className="flex gap-5">
+                            <span className="font-semibold">Estatus:</span>
+                            <div className="text-center lg:text-left">
+                                <UserStatusBadge status={userQuery.data.data.status} />
                             </div>
-                            <div className="flex gap-5">
-                                <span className="font-semibold">Rol:</span>
-                                <RoleStatusBadge role={userQuery.data.data.role} />
-                            </div>
-                            <div className="flex gap-5">
-                                <span className="font-semibold">Correo:</span>
-                                <p className="text-center lg:text-left">{userQuery.data.data.email}</p>
-                            </div>
+                        </div>
+                        <div className="flex gap-5">
+                            <span className="font-semibold">Rol:</span>
+                            <RoleStatusBadge role={userQuery.data.data.role} />
+                        </div>
+                        <div className="flex gap-5">
+                            <span className="font-semibold">Correo:</span>
+                            <p className="text-center lg:text-left">{userQuery.data.data.email}</p>
                         </div>
                     </div>
                 </div>
-                <div className="divider"></div>
-                <div className="overflow-x-auto w-full">
-                    <table className="table w-full ">
-                        <thead>
+            </div>
+            <div className="divider"></div>
+            <div className="overflow-x-auto w-full">
+                <table className="table w-full ">
+                    <thead>
+                        <tr>
+                            <th>Jugador</th>
+                            <th>Fecha de Atención</th>
+                            <th className="tracking-wider ">Tratamiento</th>
+                            <th className="tracking-wider">Tests</th>
+                            <th className="tracking-wider">Resultados</th>
+                            <th className=""></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {checkupsQuery.data.data.map((checkup) => (
+                            <CheckupRow key={checkup.id} checkup={checkup} user={user} onDeleteCheckup={() => {}} />
+                        ))}
+                        {checkupsQuery.data.data.length == 0 && <EmptyTableText title="No hay consultas para mostrar" colSpan={6} />}
+                        {checkupsQuery.isError && (
                             <tr>
-                                <th>Jugador</th>
-                                <th>Fecha de Atención</th>
-                                <th className="tracking-wider ">Tratamiento</th>
-                                <th className="tracking-wider">Tests</th>
-                                <th className="tracking-wider">Resultados</th>
-                                <th className=""></th>
+                                <td colSpan={10}>
+                                    <ErrorMessage />
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {checkupsQuery.data.data.map((checkup) => (
-                                <CheckupRow key={checkup.id} checkup={checkup} user={user} onDeleteCheckup={() => {}} />
-                            ))}
-                            {checkupsQuery.data.data.length == 0 && <EmptyTableText title="No hay consultas para mostrar" colSpan={6} />}
-                            {checkupsQuery.isError && (
-                                <tr>
-                                    <td colSpan={10}>
-                                        <ErrorMessage />
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            <div className="flex justify-end mt-8">
+                <div className="join">
+                    <button onClick={prevPage} disabled={page <= 1} className="join-item btn">
+                        «
+                    </button>
+                    <button className="join-item btn">Página {page}</button>
+                    <button onClick={nextPage} disabled={!checkupsQuery.data?.pagination.nextPage} className="join-item btn">
+                        »
+                    </button>
                 </div>
-                <div className="flex justify-end mt-8">
-                    <div className="join">
-                        <button onClick={prevPage} disabled={page <= 1} className="join-item btn">
-                            «
-                        </button>
-                        <button className="join-item btn">Página {page}</button>
-                        <button onClick={nextPage} disabled={!checkupsQuery.data?.pagination.nextPage} className="join-item btn">
-                            »
-                        </button>
-                    </div>
-                </div>
-            </TitleCard>
-        )
+            </div>
+        </TitleCard>
     );
 };
 

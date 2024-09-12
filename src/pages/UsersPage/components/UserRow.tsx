@@ -15,6 +15,7 @@ interface Props {
 
 const UserRow = ({ user, openEditUserModal, openDeleteUserModal }: Props) => {
     const formattedDate = useMemo(() => dayjs(user.createdAt).format("DD MMM YY"), [user.createdAt]);
+    const newAvatar = useMemo(() => (user.avatar != "" && user.avatar != null && user.avatar != "undefined" ? user.avatar : doctor), [user.avatar]);
 
     return (
         <tr>
@@ -22,7 +23,7 @@ const UserRow = ({ user, openEditUserModal, openDeleteUserModal }: Props) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img src={user.avatar ? user.avatar : doctor} alt="Avatar" />
+                            <img src={newAvatar} alt="Avatar" />
                         </div>
                     </div>
                     <div>
