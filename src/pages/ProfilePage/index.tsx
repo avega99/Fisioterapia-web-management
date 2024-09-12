@@ -114,7 +114,7 @@ const ProfilePage = () => {
                 </div>
                 <div className="divider"></div>
                 <Subtitle className="my-4 ml-5">Consultas realizadas por mí</Subtitle>
-                <div className="overflow-x-auto- w-full">
+                <div className="overflow-x-auto w-full">
                     <table className="table w-full ">
                         <thead>
                             <tr>

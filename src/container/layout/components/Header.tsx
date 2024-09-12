@@ -83,14 +83,14 @@ also includes corporate and retro themes in tailwind.config file */}
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li className="justify-between">
-                            <Link to={"/app/settings-profile"}>
+                            <Link to={"/perfil"}>
                                 Perfil
                                 {/* <span className="badge">New</span> */}
                             </Link>
                         </li>
                         {[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN].includes(user?.role as USER_ROLE) && (
                             <li className="">
-                                <Link to={"/app/settings-billing"}>Usuarios</Link>
+                                <Link to={"/usuario"}>Usuarios</Link>
                             </li>
                         )}
                         <div className="divider mt-0 mb-0"></div>
