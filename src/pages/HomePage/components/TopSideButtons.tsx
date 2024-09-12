@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { USER_ROLE } from "../../../global/user.types";
 import { useAuthStore } from "../../../store/authStore";
-import { BodyType, useModalStore } from "../../../store/modalStore";
 
 const TopSideButtons = () => {
     // const openModal = useModalStore((state) => state.openModal);
