@@ -28,7 +28,7 @@ const PersistLogin = () => {
     //     console.log(`aT ${JSON.stringify(user?.accessToken)}`);
     // }, [isLoading]);
 
-    return <>{!persist ? <Outlet /> : isLoading ? <LoadingIndicator /> : <Outlet />}</>;
+    return <>{!persist ? <Outlet /> : isLoading ? <LoadingIndicator isFullScreen /> : <Outlet />}</>;
 };
 
 export default PersistLogin;

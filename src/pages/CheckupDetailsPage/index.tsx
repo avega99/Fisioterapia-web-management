@@ -3,7 +3,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { getCheckupDetailsService } from "../../services/checkups";
 import { useQuery } from "@tanstack/react-query";
 import { useHeaderStore } from "../../store/headerStore";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
 import PlayerStatusBadge from "@/common/badges/PlayerStatusBadge";
 import { PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
