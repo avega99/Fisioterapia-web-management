@@ -64,7 +64,7 @@ export const editUserService = async ({ axios, params }: IRequest<IEditUserForm>
     return response.data;
 };
 
-export const editMyProfilerService = async ({ axios, params }: IRequest<IEditMyProfileForm>): Promise<IPaginatedResponse<IUser[]>> => {
+export const editMyProfilerService = async ({ axios, params }: IRequest<IEditMyProfileForm>): Promise<IPaginatedResponse<IUser>> => {
     const formData = new FormData();
 
     if (typeof params.avatar == "string") {

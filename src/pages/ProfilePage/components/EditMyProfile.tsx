@@ -18,8 +18,10 @@ interface Props {
 
 const EditMyProfile = ({ closeModal }: Props) => {
     const user = useAuthStore((state) => state.user);
+    const setUser = useAuthStore((state) => state.setUser);
     const queryClient = useQueryClient();
     const editMyProfile = useAxiosPrivate(editMyProfilerService);
+    if (!user) return;
 
     const form = useForm<IEditMyProfileForm>({
         defaultValues: {
@@ -34,6 +36,7 @@ const EditMyProfile = ({ closeModal }: Props) => {
         mutationFn: editMyProfile,
         onSuccess: async (data) => {
             await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+            setUser({ ...data.data, accessToken: user?.accessToken, refreshToken: user?.refreshToken });
             toast.success(data.message);
             closeModal();
         },
