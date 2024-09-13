@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { IResponse } from "@/global/common.types";
 import { useModalStore } from "@/store/modalStore";
+import { useAuthStore } from "@/store/authStore";
 
 interface Props {
     closeModal: VoidFunction;
@@ -20,6 +21,7 @@ interface Props {
 const EditUser = ({ closeModal }: Props) => {
     const updateUser = useAxiosPrivate(editUserService);
     const queryClient = useQueryClient();
+    const authUser = useAuthStore((state) => state.user);
     const extraData = useModalStore((state) => state.extraData);
     if (extraData?.type != "updateUser") return null;
 
@@ -36,6 +38,9 @@ const EditUser = ({ closeModal }: Props) => {
     });
     const photo = form.watch("avatar");
     const stringURl = getPhotoString(photo);
+
+    console.log({ stringURl})
+
     const updateMutuation = useMutation({
         mutationFn: updateUser,
         onSuccess: async (data) => {
@@ -97,6 +102,7 @@ const EditUser = ({ closeModal }: Props) => {
                     <Select type="text" label="Rol" {...form.register("role", { required: true })}>
                         <option value={USER_ROLE.READ}>Lectura</option>
                         <option value={USER_ROLE.WRITE}>Escritura</option>
+                        {authUser?.role == USER_ROLE.SUPER_ADMIN && <option value={USER_ROLE.ADMIN}>Administrador</option>}
                     </Select>
                     {form.formState.errors.role && <ErrorText>El role es requerido</ErrorText>}
                 </div>
