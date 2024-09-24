@@ -58,14 +58,13 @@ const PlayersPage = () => {
 
     return (
         <div>
-            <TitleCard title="Lista de jugadores" TopSideButtons={<RightButtons />}>
+            <TitleCard title="Lista de jugadores registrados" TopSideButtons={<RightButtons />}>
                 <div className="overflow-x-auto w-full">
                     <table className="table w-full">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
                                 <th>Número camiseta</th>
-                                <th>Estatus</th>
                                 <th>Categoría</th>
                                 <th>Fecha de creación</th>
                                 <th></th>

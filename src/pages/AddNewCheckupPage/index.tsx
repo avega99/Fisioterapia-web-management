@@ -12,6 +12,9 @@ import { useEffect } from "react";
 import Textarea from "@/common/inputs/Textarea";
 import TitleCard from "@/common/cards/TitleCard";
 import ErrorText from "@/common/texts/ErrorText";
+import Input from "@/common/inputs/Input";
+import Select from "@/common/inputs/Select";
+import { PLAYER_STATUS } from "@/global/player.types";
 
 const AddNewCheckupPage = () => {
     const setTitle = useHeaderStore((state) => state.setTitle);
@@ -58,6 +61,23 @@ const AddNewCheckupPage = () => {
                                 render={({ field: { value, onChange } }) => <Autocomplete onSelectPlayer={onChange} value={value} />}
                             />
                             {errors.player && <ErrorText>El jugador es requerido</ErrorText>}
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <Input {...register("appointment_date", { required: true })} label="Fecha de consulta" type="datetime-local" />
+                            {errors.appointment_date && <ErrorText>La fecha de consulta es requerida</ErrorText>}
+                        </div>
+                        <div>
+                            <div>
+                                <Select label="Condición del jugador" {...register("player_status", { required: true })}>
+                                    <option value=""></option>
+                                    <option value={PLAYER_STATUS.TRAINING}>Entrenando</option>
+                                    <option value={PLAYER_STATUS.AVAILABLE}>Disponible para jugar</option>
+                                    <option value={PLAYER_STATUS.INJURED}>Lesionado</option>
+                                </Select>
+                                {errors.player_status && <ErrorText>El estatus del jugadador es requerido</ErrorText>}
+                            </div>
                         </div>
                     </div>
                     <div className="divider"></div>

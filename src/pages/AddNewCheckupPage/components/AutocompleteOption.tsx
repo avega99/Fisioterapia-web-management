@@ -7,7 +7,7 @@ interface Props {
 
 const AutocompleteOption = ({ player, onSelectOption }: Props) => {
     return (
-        <div key={player.id} onClick={() => onSelectOption(player)}>
+        <div key={player.id} onClick={() => onSelectOption(player)} className="cursor-pointer">
             <div className="flex items-center space-x-3">
                 <div className="avatar">
                     <div className="mask mask-squircle w-12 h-12">

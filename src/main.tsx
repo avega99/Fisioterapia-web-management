@@ -42,9 +42,17 @@ createRoot(document.getElementById("root")!).render(
                                 <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.READ, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITE]} />}>
                                     <Route path="/" element={<HomePage />} />
                                     <Route path="jugadores" element={<PlayersPage />} />
+                                    <Route path="/jugador/:id" element={<PlayerDetailsPage />} />
+                                </Route>
+                                <Route
+                                    element={
+                                        <RequireAuth
+                                            allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.READ, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITE, USER_ROLE.PLAYER]}
+                                        />
+                                    }
+                                >
                                     <Route path="/consulta/:id" element={<CheckupDetailsPage />} />
                                     <Route path="/perfil" element={<ProfilePage />} />
-                                    <Route path="/jugador/:id" element={<PlayerDetailsPage />} />
                                 </Route>
                                 <Route element={<RequireAuth allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITE]} />}>
                                     <Route path="agregar-consulta" element={<AddNewCheckupPage />} />

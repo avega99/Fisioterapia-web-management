@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 import { useMemo } from "react";
 import player from "@/assets/icons/soccer-player.png";
+import PlayerStatusBadge from "@/common/badges/PlayerStatusBadge";
 
 interface Props {
     checkup: ICheckup;
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const CheckupRow = ({ checkup, user, onDeleteCheckup }: Props) => {
-    const formattedDate = useMemo(() => dayjs(checkup.createdAt).format("DD MMM YY"), [checkup.createdAt]);
+    const formattedDate = useMemo(() => dayjs(checkup.appointment_date).format("DD MMM YY"), [checkup.appointment_date]);
     const isMine = useMemo(() => {
         return checkup.createdBy.id === user?.id;
     }, [checkup]);
@@ -35,6 +36,9 @@ const CheckupRow = ({ checkup, user, onDeleteCheckup }: Props) => {
                         <div className="text-sm opacity-50">{checkup.player.last_name}</div>
                     </div>
                 </div>
+            </td>
+            <td>
+                <PlayerStatusBadge status={checkup.player_status} />
             </td>
             <td>{formattedDate}</td>
             <td>

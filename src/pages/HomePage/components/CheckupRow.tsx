@@ -17,7 +17,7 @@ interface Props {
 }
 
 const CheckupRow = ({ checkup, onDeleteCheckup, user }: Props) => {
-    const formattedDate = useMemo(() => dayjs(checkup.createdAt).format("DD MMM YY"), [checkup.createdAt]);
+    const formattedDate = useMemo(() => dayjs(checkup.appointment_date).format("DD MMM YY"), [checkup.appointment_date]);
     const isMine = useMemo(() => {
         return checkup.createdBy.id === user.id;
     }, [checkup]);
@@ -46,7 +46,7 @@ const CheckupRow = ({ checkup, onDeleteCheckup, user }: Props) => {
             <td className="">{checkup.player.squad_number}</td>
             <td className="">{formattedDate}</td>
             <td className="">
-                <PlayerStatusBadge status={checkup.player.status} />
+                <PlayerStatusBadge status={checkup.player_status} />
             </td>
             <td className="">
                 <div className="flex items-center space-x-3">

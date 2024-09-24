@@ -9,6 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import Input from "@/common/inputs/Input";
 import ErrorText from "@/common/texts/ErrorText";
+import { USER_ROLE } from "@/global/user.types";
 
 const LoginPgae = () => {
     const setUser = useAuthStore((state) => state.setUser);
@@ -25,7 +26,11 @@ const LoginPgae = () => {
         mutationKey: ["login"],
         onSuccess: ({ data }) => {
             setUser(data);
-            navigate(from, { replace: true });
+            if (data.role == USER_ROLE.PLAYER) {
+                navigate("/perfil", { replace: true });
+            } else {
+                navigate(from, { replace: true });
+            }
         },
     });
 

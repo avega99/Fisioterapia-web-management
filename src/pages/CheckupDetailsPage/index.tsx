@@ -75,7 +75,7 @@ const CheckupDetailsPage = () => {
                                         <div className="avatar not-prose ml-2 mb-4">
                                             <div
                                                 className={`${
-                                                    ring[checkupQuery.data.data.player.status]
+                                                    ring[checkupQuery.data.data.player_status]
                                                 } ring-offset-base-100 max-w-44 rounded-full ring ring-offset-2 `}
                                             >
                                                 <img
@@ -96,8 +96,8 @@ const CheckupDetailsPage = () => {
                                         Número: <span className="font-bold">{checkupQuery.data.data.player.squad_number}</span>
                                     </p>
                                     <div className="flex items-center gap-2">
-                                        Estatus:
-                                        <PlayerStatusBadge status={checkupQuery.data.data.player.status} />
+                                        Condición del jugadador a la hora de la consulta:
+                                        <PlayerStatusBadge status={checkupQuery.data.data.player_status} />
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +113,10 @@ const CheckupDetailsPage = () => {
                                     </div>
                                 </div>
                                 <p>
-                                    Nombre: <span className="font-bold">{checkupQuery.data.data.createdBy.name}</span>
+                                    Nombre:{" "}
+                                    <span className="font-bold">
+                                        {checkupQuery.data.data.createdBy.name} {checkupQuery.data.data.createdBy.last_name}
+                                    </span>
                                 </p>
 
                                 <p>

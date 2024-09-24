@@ -7,9 +7,7 @@ interface Props {
 const RoleStatusBadge = ({ role }: Props) => {
     if (role == USER_ROLE.ADMIN)
         return (
-            <div className=" whitespace-nowrap inline-flex rounded-full bg-warning bg-opacity-10 px-3 py-1 text-sm font-medium text-warning">
-                Administrador
-            </div>
+            <div className=" whitespace-nowrap inline-flex rounded-full bg-warning bg-opacity-10 px-3 py-1 text-sm font-medium text-warning">Administrador</div>
         );
     if (role == USER_ROLE.SUPER_ADMIN)
         return (
@@ -23,6 +21,12 @@ const RoleStatusBadge = ({ role }: Props) => {
         return (
             <div className=" whitespace-nowrap inline-flex rounded-full bg-indigo-500 text-indigo-500 bg-opacity-10  px-3 py-1 text-sm font-medium">
                 Lectura
+            </div>
+        );
+    if (role == USER_ROLE.PLAYER)
+        return (
+            <div className=" whitespace-nowrap inline-flex rounded-full bg-orange-500 text-orange-500 bg-opacity-10  px-3 py-1 text-sm font-medium">
+                Jugador
             </div>
         );
     return <div></div>;

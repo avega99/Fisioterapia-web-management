@@ -14,7 +14,6 @@ export interface IPlayer {
     player_name: string;
     last_name: string;
     squad_number: number;
-    status: PLAYER_STATUS;
     category: PLAYER_CATEGORY;
     avatar: string | null;
     avatar_name: string | null;
@@ -23,12 +22,15 @@ export interface IPlayer {
     updatedAt: string;
 }
 
+export interface IPlayerDetails extends IPlayer {
+    player_status: PLAYER_STATUS;
+}
+
 export interface IPlayerForm {
     player_name: string;
     last_name: string;
     squad_number: string | number;
     category: PLAYER_CATEGORY;
-    status: PLAYER_STATUS;
     avatar?: FileList;
 }
 export interface IEditPlayerForm extends Omit<IPlayerForm, "avatar"> {

@@ -72,18 +72,11 @@ const AddPlayer = ({ closeModal }: Props) => {
                     {form.formState.errors.category && <ErrorText>La categoría es requerida</ErrorText>}
                 </div>
                 <div>
-                    <Select label="Estatus" {...form.register("status", { required: true })}>
-                        <option value=""></option>
-                        <option value={PLAYER_STATUS.TRAINING}>Entrenando</option>
-                        <option value={PLAYER_STATUS.AVAILABLE}>Disponible</option>
-                        <option value={PLAYER_STATUS.INJURED}>Lesionado</option>
-                    </Select>
-                    {form.formState.errors.status && <ErrorText>El estatus es requerido</ErrorText>}
-                </div>
-                <div>
                     <Input label="Número de playera" type="number" {...form.register("squad_number", { required: true })} />
                     {form.formState.errors.squad_number && <ErrorText>El número de playera es requerido</ErrorText>}
                 </div>
+            </div>
+            <div className="grid grid-cols-1 gap-6">
                 <div>
                     <Input label="Foto de jugador" type="file" accept="image/*" {...form.register("avatar")} />
                 </div>

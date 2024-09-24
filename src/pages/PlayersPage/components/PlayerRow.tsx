@@ -36,9 +36,6 @@ const PlayerRow = ({ player, hasWritePermissions, openDeleteModal, openEditModal
                 </div>
             </td>
             <td>#{player.squad_number}</td>
-            <td>
-                <PlayerStatusBadge status={player.status} />
-            </td>
             <td>{category}</td>
             <td>{formattedDate}</td>
 

@@ -39,7 +39,7 @@ const EditUser = ({ closeModal }: Props) => {
     const photo = form.watch("avatar");
     const stringURl = getPhotoString(photo);
 
-    console.log({ stringURl})
+    console.log({ stringURl });
 
     const updateMutuation = useMutation({
         mutationFn: updateUser,
@@ -102,6 +102,7 @@ const EditUser = ({ closeModal }: Props) => {
                     <Select type="text" label="Rol" {...form.register("role", { required: true })}>
                         <option value={USER_ROLE.READ}>Lectura</option>
                         <option value={USER_ROLE.WRITE}>Escritura</option>
+                        {/* <option value={USER_ROLE.PLAYER}>Jugador</option> */}
                         {authUser?.role == USER_ROLE.SUPER_ADMIN && <option value={USER_ROLE.ADMIN}>Administrador</option>}
                     </Select>
                     {form.formState.errors.role && <ErrorText>El role es requerido</ErrorText>}

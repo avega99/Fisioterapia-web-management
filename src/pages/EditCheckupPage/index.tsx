@@ -1,12 +1,15 @@
 import BackButton from "@/common/buttons/BackButton";
 import TitleCard from "@/common/cards/TitleCard";
 import AutocompletePlayer from "@/common/inputs/AutocompletePlayer";
+import Input from "@/common/inputs/Input";
+import Select from "@/common/inputs/Select";
 import Textarea from "@/common/inputs/Textarea";
 import LoadingIndicator from "@/common/loading/LoadingIndicator";
 import ErrorMessage from "@/common/texts/ErrorMessage";
 import ErrorText from "@/common/texts/ErrorText";
 import { IEditCheckupForm } from "@/global/checkups.types";
 import { IResponse } from "@/global/common.types";
+import { PLAYER_STATUS } from "@/global/player.types";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { getCheckupDetailsService, upadateheckupService } from "@/services/checkups";
 import { useAuthStore } from "@/store/authStore";
@@ -74,6 +77,8 @@ const EditCheckupPage = () => {
             setValue("notes", checkupQuery.data.data.notes);
             setValue("results", checkupQuery.data.data.results);
             setValue("tests", checkupQuery.data.data.tests);
+            setValue("appointment_date", new Date(checkupQuery.data.data.appointment_date).toISOString().slice(0, 16));
+            setValue("player_status", checkupQuery.data.data.player_status);
         }
     }, [checkupQuery.data]);
 
@@ -106,6 +111,23 @@ const EditCheckupPage = () => {
                                 render={({ field: { value, onChange } }) => <AutocompletePlayer onSelectPlayer={onChange} value={value} />}
                             />
                             {errors.player && <ErrorText>El jugador es requerido</ErrorText>}
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <Input {...register("appointment_date", { required: true })} label="Fecha de consulta" type="datetime-local" />
+                            {errors.appointment_date && <ErrorText>La fecha de consulta es requerida</ErrorText>}
+                        </div>
+                        <div>
+                            <div>
+                                <Select label="Condición del jugador" {...register("player_status", { required: true })}>
+                                    <option value=""></option>
+                                    <option value={PLAYER_STATUS.TRAINING}>Entrenando</option>
+                                    <option value={PLAYER_STATUS.AVAILABLE}>Disponible para jugar</option>
+                                    <option value={PLAYER_STATUS.INJURED}>Lesionado</option>
+                                </Select>
+                                {errors.player_status && <ErrorText>El estatus del jugador es requerido</ErrorText>}
+                            </div>
                         </div>
                     </div>
                     <div className="divider"></div>

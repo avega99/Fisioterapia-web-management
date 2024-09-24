@@ -1,4 +1,4 @@
-import practic from "@/assets/icons/chiropractic.png";
+import gallos from "@/assets/icons/gallos.png";
 import band from "@/assets/icons/resistance-band.png";
 
 const LoginIntro = () => {
@@ -12,7 +12,7 @@ const LoginIntro = () => {
                     </h1>
 
                     <div className="text-center mt-12">
-                        <img src={practic} alt="Logo" className="w-48 inline-block"></img>
+                        <img src={gallos} alt="Logo" className="w-48 inline-block"></img>
                     </div>
 
                     {/* Importing pointers component */}

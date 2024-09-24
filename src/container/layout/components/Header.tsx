@@ -90,7 +90,7 @@ also includes corporate and retro themes in tailwind.config file */}
                         </li>
                         {[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN].includes(user?.role as USER_ROLE) && (
                             <li className="">
-                                <Link to={"/usuario"}>Usuarios</Link>
+                                <Link to={"/usuarios"}>Usuarios</Link>
                             </li>
                         )}
                         <div className="divider mt-0 mb-0"></div>

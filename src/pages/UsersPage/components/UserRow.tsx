@@ -48,11 +48,13 @@ const UserRow = ({ user, openEditUserModal, openDeleteUserModal }: Props) => {
                         </button>
                     </div>
                 </Link>
-                <div className="tooltip" data-tip="Editar usuario">
-                    <button className="btn btn-square btn-ghost" onClick={() => openEditUserModal(user)}>
-                        <PencilSquareIcon className="w-5" />
-                    </button>
-                </div>
+                {!user.playerId && (
+                    <div className="tooltip" data-tip="Editar usuario">
+                        <button className="btn btn-square btn-ghost" onClick={() => openEditUserModal(user)}>
+                            <PencilSquareIcon className="w-5" />
+                        </button>
+                    </div>
+                )}
                 <div className="tooltip" data-tip="Eliminar usuario">
                     <button className="btn btn-square btn-ghost" onClick={() => openDeleteUserModal(user)}>
                         <TrashIcon className="w-5" />

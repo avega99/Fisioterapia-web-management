@@ -1,5 +1,5 @@
 import { ICheckupMedia } from "./checkupMedia.interfaces";
-import { IPlayer } from "./player.types";
+import { IPlayer, PLAYER_STATUS } from "./player.types";
 import { IUser } from "./user.types";
 
 export interface ICheckup {
@@ -9,6 +9,8 @@ export interface ICheckup {
     results: string;
     createdById: number;
     playerId: number;
+    player_status: PLAYER_STATUS;
+    appointment_date: string;
     createdAt: string;
     updatedAt: string;
     player: IPlayer;
@@ -24,6 +26,8 @@ export interface ICheckupForm {
     tests: string;
     notes: string;
     results: string;
+    appointment_date: string;
+    player_status: PLAYER_STATUS;
     player: IPlayer;
 }
 
@@ -32,4 +36,6 @@ export interface IEditCheckupForm {
     notes: string;
     results: string;
     player: IPlayer;
+    appointment_date: string;
+    player_status: PLAYER_STATUS;
 }

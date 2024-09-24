@@ -1,8 +1,11 @@
+import { IPlayer } from "./player.types";
+
 export enum USER_ROLE {
     SUPER_ADMIN = "SUPER_ADMIN",
     ADMIN = "ADMIN",
     WRITE = "WRITE",
     READ = "READ",
+    PLAYER = "PLAYER",
 }
 export enum USER_STATUS {
     INACTIVE = "INACTIVE",
@@ -19,6 +22,7 @@ export interface IUser {
     avatar_name: null | string;
     role: USER_ROLE;
     status: USER_STATUS;
+    playerId?: number;
     refreshToken: string;
     createdAt: string;
     updatedAt: string;
@@ -33,6 +37,7 @@ export interface IAddUserForm {
     status: USER_STATUS;
     last_name: string;
     avatar?: FileList;
+    player?: IPlayer;
 }
 
 export interface IEditUserForm extends Omit<IAddUserForm, "avatar" | "password"> {

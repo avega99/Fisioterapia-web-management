@@ -9,7 +9,7 @@ import AutocompleteOption from "../../pages/AddNewCheckupPage/components/Autocom
 
 interface Props {
     onSelectPlayer: (player: IPlayer | null) => void;
-    value: IPlayer;
+    value?: IPlayer;
 }
 
 const AutocompletePlayer = ({ onSelectPlayer, value }: Props) => {

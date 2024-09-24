@@ -90,7 +90,7 @@ const PlayerDetailsPage = () => {
                                 <div className="flex gap-5">
                                     <span className="font-semibold">Condición:</span>
                                     <div className="text-center lg:text-left">
-                                        <PlayerStatusBadge status={playerQuery.data.data.status} />
+                                        <PlayerStatusBadge status={playerQuery.data.data.player_status} />
                                     </div>
                                 </div>
                                 <div className="flex gap-5">

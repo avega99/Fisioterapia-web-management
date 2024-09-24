@@ -1,5 +1,5 @@
 import { IAddUserForm, USER_ROLE, USER_STATUS } from "@/global/user.types";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import doctor from "@/assets/icons/doctor.png";
 import Input from "@/common/inputs/Input";
 import ErrorText from "@/common/texts/ErrorText";
@@ -12,6 +12,8 @@ import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useModalStore } from "@/store/modalStore";
 import { useAuthStore } from "@/store/authStore";
+import AutocompletePlayer from "@/common/inputs/AutocompletePlayer";
+import { useEffect } from "react";
 
 interface Props {
     closeModal: VoidFunction;
@@ -24,6 +26,9 @@ const AddUser = ({ closeModal }: Props) => {
     const queryClient = useQueryClient();
     const form = useForm<IAddUserForm>();
     const files = form.watch("avatar");
+    const role = form.watch("role");
+    const isPlayer = role == USER_ROLE.PLAYER;
+
     const createMututation = useMutation({
         mutationFn: createUser,
         onSuccess: async (data) => {
@@ -42,6 +47,15 @@ const AddUser = ({ closeModal }: Props) => {
         createMututation.mutate(data);
     };
 
+    useEffect(() => {
+        if (role == USER_ROLE.PLAYER) {
+            form.resetField("name");
+            form.resetField("last_name");
+        } else {
+            form.resetField("player");
+        }
+    }, [role]);
+
     return (
         <form action="" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="w-full grid place-content-center">
@@ -59,28 +73,49 @@ const AddUser = ({ closeModal }: Props) => {
                 </div>
             </div>
 
+            {isPlayer && (
+                <div className="grid grid-cols-1">
+                    <div>
+                        <Controller
+                            control={form.control}
+                            name="player"
+                            rules={{ required: isPlayer }}
+                            render={({ field: { onChange, value } }) => (
+                                <AutocompletePlayer
+                                    onSelectPlayer={(newPlayer) => {
+                                        form.setValue("name", newPlayer?.player_name || "");
+                                        form.setValue("last_name", newPlayer?.last_name || "");
+                                        onChange(newPlayer);
+                                    }}
+                                    value={value}
+                                />
+                            )}
+                        />
+                    </div>
+                </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <Input type="text" label="Nombre" {...form.register("name", { required: true })} />
+                    <Input type="text" label="Nombre" {...form.register("name", { required: true })} readOnly={isPlayer} />
                     {form.formState.errors.name && <ErrorText>El nombre es requerido</ErrorText>}
                 </div>
                 <div>
-                    <Input type="text" label="Apellido" {...form.register("last_name", { required: true })} />
+                    <Input type="text" label="Apellido" {...form.register("last_name", { required: true })} readOnly={isPlayer} />
                     {form.formState.errors.last_name && <ErrorText>El apellido es requerido</ErrorText>}
                 </div>
                 <div>
-                    <Input type="text" label="Correo" {...form.register("email", { required: true })} />
+                    <Input type="text" label="Correo" autoComplete="off" {...form.register("email", { required: true })} />
                     {form.formState.errors.last_name && <ErrorText>El correo es requerido</ErrorText>}
                 </div>
                 <div>
-                    <Input type="password" label="Contraseña" {...form.register("password", { required: true })} />
+                    <Input type="password" label="Contraseña" autoComplete="off" {...form.register("password", { required: true })} />
                     {form.formState.errors.last_name && <ErrorText>La contraseña es requerida</ErrorText>}
                 </div>
                 <div>
                     <Select type="text" label="Estatus" {...form.register("status", { required: true })}>
                         <option value={USER_STATUS.ACTIVE}>Activo</option>
                         <option value={USER_STATUS.INACTIVE}>Inactivo</option>
-                        {}
                     </Select>
                     {form.formState.errors.status && <ErrorText>El correo es requerido</ErrorText>}
                 </div>
@@ -88,6 +123,7 @@ const AddUser = ({ closeModal }: Props) => {
                     <Select type="text" label="Rol" {...form.register("role", { required: true })}>
                         <option value={USER_ROLE.READ}>Lectura</option>
                         <option value={USER_ROLE.WRITE}>Escritura</option>
+                        <option value={USER_ROLE.PLAYER}>Jugador</option>
                         {user?.role == USER_ROLE.SUPER_ADMIN && <option value={USER_ROLE.ADMIN}>Administrador</option>}
                     </Select>
                     {form.formState.errors.role && <ErrorText>El role es requerido</ErrorText>}

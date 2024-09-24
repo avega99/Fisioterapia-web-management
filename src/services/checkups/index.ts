@@ -31,6 +31,8 @@ export const createCheckupsService = async ({ axios, params }: IRequest<ICheckup
     formData.append("playerId", params.player.id.toString());
     formData.append("tests", params.tests);
     formData.append("results", params.results);
+    formData.append("appointment_date", params.appointment_date);
+    formData.append("player_status", params.player_status);
 
     const response = await axios.post("/checkup", formData, {
         headers: {
@@ -50,6 +52,8 @@ export const upadateheckupService = async ({
     formData.append("playerId", data.player.id.toString());
     formData.append("tests", data.tests);
     formData.append("results", data.results);
+    formData.append("appointment_date", data.appointment_date);
+    formData.append("player_status", data.player_status);
 
     const response = await axios.patch(`/checkup/${id}`, formData, {
         headers: {

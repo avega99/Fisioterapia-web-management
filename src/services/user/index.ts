@@ -28,6 +28,9 @@ export const createUserService = async ({ axios, params }: IRequest<IAddUserForm
     formData.append("password", params.password);
     formData.append("status", params.status);
     formData.append("role", params.role);
+    if (params.player) {
+        formData.append("playerId", params.player.id.toString());
+    }
 
     const response = await axios.post(`/user`, formData, {
         headers: {

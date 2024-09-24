@@ -1,7 +1,7 @@
 import Input from "@/common/inputs/Input";
 import Select from "@/common/inputs/Select";
 import ErrorText from "@/common/texts/ErrorText";
-import { IEditPlayerForm, PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
+import { IEditPlayerForm, PLAYER_CATEGORY } from "@/global/player.types";
 import { useModalStore } from "@/store/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -42,7 +42,6 @@ const EditPlayer = ({ closeModal }: Props) => {
             last_name: extraData.data.last_name,
             player_name: extraData.data.player_name,
             squad_number: extraData.data.squad_number,
-            status: extraData.data.status,
             id: extraData.data.id,
         },
     });
@@ -87,18 +86,12 @@ const EditPlayer = ({ closeModal }: Props) => {
                     {form.formState.errors.category && <ErrorText>La categoría es requerida</ErrorText>}
                 </div>
                 <div>
-                    <Select label="Estatus" {...form.register("status", { required: true })}>
-                        <option value=""></option>
-                        <option value={PLAYER_STATUS.TRAINING}>Entrenando</option>
-                        <option value={PLAYER_STATUS.AVAILABLE}>Disponible</option>
-                        <option value={PLAYER_STATUS.INJURED}>Lesionado</option>
-                    </Select>
-                    {form.formState.errors.status && <ErrorText>El estatus es requerido</ErrorText>}
-                </div>
-                <div>
                     <Input label="Número de playera" type="number" {...form.register("squad_number", { required: true })} />
                     {form.formState.errors.squad_number && <ErrorText>El número de playera es requerido</ErrorText>}
                 </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
                 <div>
                     <Input label="Foto de jugador" type="file" accept="image/*" {...form.register("avatar")} />
                 </div>

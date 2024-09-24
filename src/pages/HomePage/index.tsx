@@ -57,7 +57,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <TitleCard title="Consultas" TopSideButtons={<TopSideButtons />}>
+            <TitleCard title="Todas las consultas" TopSideButtons={<TopSideButtons />}>
                 <div className="overflow-x-auto w-full">
                     <table className="table w-full ">
                         <thead>

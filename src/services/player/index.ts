@@ -1,12 +1,12 @@
 import { IPaginatedResponse, IRequest, IResponse } from "../../global/common.types";
-import { IEditPlayerForm, IPlayer, IPlayerForm } from "../../global/player.types";
+import { IEditPlayerForm, IPlayer, IPlayerDetails, IPlayerForm } from "../../global/player.types";
 
 export const searchPlayersService = async ({ axios, params: { name } }: IRequest<{ name: string }>): Promise<IResponse<IPlayer[]>> => {
     const response = await axios.get(`/player/search?name=${name}`);
     return response.data;
 };
 
-export const getPlayerService = async ({ axios, params: { id } }: IRequest<{ id: string | number }>): Promise<IResponse<IPlayer>> => {
+export const getPlayerService = async ({ axios, params: { id } }: IRequest<{ id: string | number }>): Promise<IResponse<IPlayerDetails>> => {
     const response = await axios.get(`/player/${id}`);
     return response.data;
 };
@@ -31,7 +31,6 @@ export const createPlayersService = async ({ axios, params }: IRequest<IPlayerFo
     formData.append("category", params.category);
     formData.append("last_name", params.last_name);
     formData.append("squad_number", params.squad_number.toString());
-    formData.append("status", params.status);
 
     const response = await axios.post(`/player`, formData, {
         headers: {
@@ -59,7 +58,6 @@ export const updatePlayersService = async ({ axios, params }: IRequest<IEditPlay
     formData.append("category", params.category);
     formData.append("last_name", params.last_name);
     formData.append("squad_number", params.squad_number.toString());
-    formData.append("status", params.status);
 
     const response = await axios.patch(`/player/${params.id}`, formData, {
         headers: {
