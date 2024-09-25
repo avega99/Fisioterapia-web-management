@@ -34,16 +34,19 @@ const EditCheckupAssetsPage = () => {
         queryKey: ["checkupAssets", id],
         queryFn: () => getCheckupAssets({ id: id as string }),
         select: (data) => {
-            const newData: { videos: ICheckupMedia[]; images: ICheckupMedia[] } = {
+            const newData: { videos: ICheckupMedia[]; images: ICheckupMedia[]; docs: ICheckupMedia[] } = {
                 videos: [],
                 images: [],
+                docs: [],
             };
 
             data.data.forEach((asset) => {
                 if (asset.type == "IMAGE") {
                     newData.images.push(asset);
-                } else {
+                } else if (asset.type === "VIDEO") {
                     newData.videos.push(asset);
+                } else {
+                    newData.docs.push(asset);
                 }
             });
 
@@ -68,7 +71,7 @@ const EditCheckupAssetsPage = () => {
     });
 
     const maxFiles = useMemo(() => {
-        return 5 - ((assetsQuery.data?.images.length || 0) - (assetsQuery.data?.videos.length || 0));
+        return 5 - ((assetsQuery.data?.images.length || 0) - (assetsQuery.data?.videos.length || 0) - (assetsQuery.data?.docs.length || 0));
     }, [assetsQuery.data]);
 
     const openDeleteModal = useCallback((data: ICheckupMedia) => {
@@ -128,6 +131,23 @@ const EditCheckupAssetsPage = () => {
                                 {assetsQuery.data.videos.length == 0 && <h1 className="text-lg font-medium">No hay videos para mostrar</h1>}
                             </div>
                         </div>
+                        <div className="divider"></div>
+                        <div>
+                            <h1 className="text-xl my-5 font-medium">Documentos</h1>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+                                {assetsQuery.data.docs.map((doc) => (
+                                    <div className="flex flex-col  gap-4" key={doc.id}>
+                                        <a href={doc.url} download={doc.url}>
+                                            {doc.asset_name}
+                                        </a>
+                                        <button className="btn btn-outline btn-error mt-auto" onClick={() => openDeleteModal(doc)}>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                ))}
+                                {assetsQuery.data.docs.length == 0 && <h1 className="text-lg font-medium">No hay documentos para mostrar</h1>}
+                            </div>
+                        </div>
                     </div>
                     <div className="divider"></div>
                     <form action="" onSubmit={form.handleSubmit(onSubmit)}>
@@ -141,7 +161,7 @@ const EditCheckupAssetsPage = () => {
                                     },
                                 })}
                                 type="file"
-                                accept="image/*,video/*"
+                                accept="image/*,video/*, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
                                 multiple
                                 className="file-input file-input-bordered w-full max-w-xs"
                                 disabled={maxFiles === 0}

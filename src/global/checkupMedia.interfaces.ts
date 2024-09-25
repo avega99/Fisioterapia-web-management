@@ -1,4 +1,4 @@
-export type CheckupMediaType = "IMAGE" | "VIDEO";
+export type CheckupMediaType = "IMAGE" | "VIDEO" | 'OTHER';
 
 export interface ICheckupMedia {
     id: number;
