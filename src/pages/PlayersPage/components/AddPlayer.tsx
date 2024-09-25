@@ -2,7 +2,7 @@ import Input from "@/common/inputs/Input";
 import Select from "@/common/inputs/Select";
 import ErrorText from "@/common/texts/ErrorText";
 import { IResponse } from "@/global/common.types";
-import { IPlayerForm, PLAYER_CATEGORY, PLAYER_STATUS } from "@/global/player.types";
+import { IPlayerForm, PLAYER_CATEGORY } from "@/global/player.types";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { createPlayersService } from "@/services/player";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

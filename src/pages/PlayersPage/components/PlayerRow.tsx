@@ -1,4 +1,3 @@
-import PlayerStatusBadge from "@/common/badges/PlayerStatusBadge";
 import { IPlayer, PLAYER_CATEGORY } from "@/global/player.types";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import dayjs from "dayjs";
