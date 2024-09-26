@@ -1,7 +1,7 @@
 import { IUser } from "@/global/user.types";
 import doctor from "@/assets/icons/doctor.png";
 import dayjs from "dayjs";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { DocumentMagnifyingGlassIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import UserStatusBadge from "@/common/badges/UserStatusBadge";
@@ -41,19 +41,22 @@ const UserRow = ({ user, openEditUserModal, openDeleteUserModal }: Props) => {
             </td>
             <td>{formattedDate}</td>
             <td className="min-w-44">
-                <Link to={`/usuario/${user.id}`}>
-                    <div className="tooltip" data-tip="Ver historial de consultas realizadas por este usuario">
-                        <button className="btn btn-square btn-ghost">
-                            <DocumentMagnifyingGlassIcon className="w-5" />
-                        </button>
-                    </div>
-                </Link>
                 {!user.playerId && (
-                    <div className="tooltip" data-tip="Editar usuario">
-                        <button className="btn btn-square btn-ghost" onClick={() => openEditUserModal(user)}>
-                            <PencilSquareIcon className="w-5" />
-                        </button>
-                    </div>
+                    <Fragment>
+                        <Link to={`/usuario/${user.id}`}>
+                            <div className="tooltip" data-tip="Ver historial de consultas realizadas por este usuario">
+                                <button className="btn btn-square btn-ghost">
+                                    <DocumentMagnifyingGlassIcon className="w-5" />
+                                </button>
+                            </div>
+                        </Link>
+
+                        <div className="tooltip" data-tip="Editar usuario">
+                            <button className="btn btn-square btn-ghost" onClick={() => openEditUserModal(user)}>
+                                <PencilSquareIcon className="w-5" />
+                            </button>
+                        </div>
+                    </Fragment>
                 )}
                 <div className="tooltip" data-tip="Eliminar usuario">
                     <button className="btn btn-square btn-ghost" onClick={() => openDeleteUserModal(user)}>

@@ -112,6 +112,7 @@ const PlayerDetailsPage = () => {
                                     <th>Atendido por</th>
                                     <th>Fecha de Atención</th>
                                     <th className="tracking-wider ">Tratamiento</th>
+                                    <th className="tracking-wider ">Condición</th>
                                     <th className="tracking-wider">Tests</th>
                                     <th className="tracking-wider">Resultados</th>
                                     <th className=""></th>
