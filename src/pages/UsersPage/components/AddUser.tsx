@@ -58,20 +58,22 @@ const AddUser = ({ closeModal }: Props) => {
 
     return (
         <form action="" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="w-full grid place-content-center">
-                <div className="indicator">
-                    {files && files?.length > 0 && (
-                        <button type="button" className="indicator-item btn btn-sm btn-circle" onClick={removePhoto}>
-                            x
-                        </button>
-                    )}
-                    <div className="avatar">
-                        <div className="w-24 rounded-full">
-                            <img src={files?.[0] ? URL.createObjectURL(files[0]) : doctor} alt="Foto de perfil" />
+            {!isPlayer && (
+                <div className="w-full grid place-content-center">
+                    <div className="indicator">
+                        {files && files?.length > 0 && (
+                            <button type="button" className="indicator-item btn btn-sm btn-circle" onClick={removePhoto}>
+                                x
+                            </button>
+                        )}
+                        <div className="avatar">
+                            <div className="w-24 rounded-full">
+                                <img src={files?.[0] ? URL.createObjectURL(files[0]) : doctor} alt="Foto de perfil" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {isPlayer && (
                 <div className="grid grid-cols-1">
