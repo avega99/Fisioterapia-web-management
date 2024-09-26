@@ -103,7 +103,7 @@ const UsersPage = () => {
                                     </td>
                                 </tr>
                             )}
-                            {usersQuery.data?.data.length == 0 && <EmptyTableText colSpan={6} title="No hay jugadores para mostrar" />}
+                            {usersQuery.data?.data.length == 0 && <EmptyTableText colSpan={6} title="No hay usuarios para mostrar" />}
                         </tbody>
                     </table>
                 </div>
